@@ -256,7 +256,7 @@ const categoryLabels = {
 };
 
 const API_BASE = process.env.NODE_ENV === 'production' 
-  ? 'https://certificate-portfolio.up.railway.app' // Replace with your actual Railway URL
+  ? '' // Same domain for Render all-in-one deployment
   : 'http://localhost:5000';
 
 const Certificates = () => {

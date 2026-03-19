@@ -15,8 +15,17 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve React static files in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')));
+}
+
 // SQLite Database Connection
-const db = new sqlite3.Database('./certificates.db', (err) => {
+const dbPath = process.env.NODE_ENV === 'production' 
+  ? '/tmp/certificates.db' 
+  : './certificates.db';
+
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
         console.error('Error opening database:', err.message);
     } else {
