@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaChevronDown } from 'react-icons/fa';
+import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const AboutContainer = styled.section`
   padding: 5rem 0;
@@ -96,65 +96,27 @@ const SocialLinks = styled.div`
 `;
 
 const SocialLink = styled(motion.a)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 50px;
   height: 50px;
-  background: rgba(102, 126, 234, 0.2);
   border-radius: 50%;
-  color: #667eea;
-  font-size: 1.5rem;
-  margin: 0 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
   transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   &:hover {
-    background: rgba(102, 126, 234, 0.3);
-    color: #764ba2;
-    transform: translateY(-2px);
-  }
-`;
-
-const ScrollArrow = styled(motion.div)`
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.9);
-    transform: translateX(-50%) translateY(-5px);
-  }
-
-  svg {
-    animation: bounce 2s infinite;
-  }
-
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-10px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
   }
 `;
 
 const About = () => {
-  const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <AboutContainer id="about">
       <Container>
@@ -167,16 +129,84 @@ const About = () => {
             <FaUser style={{ marginRight: '1rem' }} />
             About Me
           </Title>
+          <Subtitle>
+            Passionate IoT developer and full-stack engineer creating innovative solutions
+          </Subtitle>
         </SectionHeader>
 
-        <ScrollArrow
-          onClick={scrollToProjects}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-        >
-          <FaChevronDown />
-        </ScrollArrow>
+        <AboutGrid>
+          <AboutCard
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <AboutText>
+              I'm a 3rd-year B.Tech student in IoT from Vijayawada, passionate about creating 
+              smart infrastructure solutions and blockchain-secured systems. With expertise in 
+              Flutter mobile development, NodeMCU/Arduino programming, and full-stack web 
+              applications, I love turning innovative ideas into reality.
+            </AboutText>
+            
+            <AboutText>
+              Currently interning at Supraja Technologies, I'm gaining hands-on experience in 
+              developing real-world IoT solutions and full-stack applications. My journey in 
+              technology has been driven by curiosity and a desire to solve meaningful problems 
+              through innovation.
+            </AboutText>
+          </AboutCard>
+
+          <div>
+            <AboutCard
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <InfoList>
+                <InfoItem>
+                  <InfoIcon><FaUser /></InfoIcon>
+                  <span>Pulikonda Keshav Shanmukh</span>
+                </InfoItem>
+                
+                <InfoItem>
+                  <InfoIcon><FaMapMarkerAlt /></InfoIcon>
+                  <span>Vijayawada, Andhra Pradesh, India</span>
+                </InfoItem>
+                
+                <InfoItem>
+                  <InfoIcon><FaEnvelope /></InfoIcon>
+                  <span>keshavshanmukh25@gmail.com</span>
+                </InfoItem>
+                
+                <InfoItem>
+                  <InfoIcon><FaPhone /></InfoIcon>
+                  <span>+91-9515037980</span>
+                </InfoItem>
+              </InfoList>
+
+              <SocialLinks>
+                <SocialLink
+                  href="https://linkedin.com/in/keshavshanmukhpulikonda"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaLinkedin />
+                </SocialLink>
+                
+                <SocialLink
+                  href="https://github.com/KeshavShanmukh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaGithub />
+                </SocialLink>
+              </SocialLinks>
+            </AboutCard>
+          </div>
+        </AboutGrid>
       </Container>
     </AboutContainer>
   );

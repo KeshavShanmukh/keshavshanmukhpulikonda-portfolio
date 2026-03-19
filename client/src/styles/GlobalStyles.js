@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   * {
@@ -13,7 +13,6 @@ export const GlobalStyles = createGlobalStyle`
     color: #ffffff;
     line-height: 1.6;
     overflow-x: hidden;
-    position: relative;
   }
 
   html {

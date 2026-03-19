@@ -20,8 +20,6 @@ const AnimatedBackground = styled.div`
   right: 0;
   bottom: 0;
   overflow: hidden;
-  z-index: 0;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
 
   &::before,
   &::after {
@@ -33,31 +31,23 @@ const AnimatedBackground = styled.div`
   }
 
   &::before {
-    width: 400px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
     top: -200px;
     right: -200px;
-    animation-delay: 0s;
   }
 
   &::after {
-    width: 300px;
-    height: 300px;
-    bottom: -150px;
-    left: -150px;
-    animation-delay: 5s;
+    width: 800px;
+    height: 800px;
+    bottom: -300px;
+    left: -300px;
+    animation-delay: 10s;
   }
 
   @keyframes float {
-    0%, 100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    33% {
-      transform: translate(-30px, 30px) rotate(120deg);
-    }
-    66% {
-      transform: translate(30px, -30px) rotate(240deg);
-    }
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-30px, 30px) rotate(180deg); }
   }
 `;
 

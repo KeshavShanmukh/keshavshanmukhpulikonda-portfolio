@@ -118,64 +118,52 @@ const ProjectLink = styled.a`
 const Projects = () => {
   const projects = [
     {
-      id: 1,
-      title: "Organ Donation Web Application",
-      description: "A comprehensive web platform that shares information about available organ donors across India, connecting donors with recipients and saving lives through technology.",
-      technologies: ["React", "Node.js", "MongoDB", "Express"],
+      title: 'IoT Smart Agriculture System',
+      description: 'An IoT-based agricultural monitoring system using sensors to track soil moisture, temperature, and humidity for optimal crop management.',
       icon: <FaDatabase />,
-      github: "#",
-      demo: "#",
-      category: "web"
+      tech: ['Arduino', 'NodeMCU', 'MQTT', 'Firebase', 'React'],
+      github: 'https://github.com/KeshavShanmukh/smart-agriculture',
+      demo: '#'
     },
     {
-      id: 2,
-      title: "Smart Home Automation System",
-      description: "Local home automation system for monitoring and controlling electrical appliances through manual switches and mobile application without cloud dependency for enhanced privacy and security.",
-      technologies: ["Arduino", "IoT", "Mobile App", "Local Network"],
+      title: 'Flutter E-Commerce App',
+      description: 'A mobile e-commerce application built with Flutter featuring product catalog, cart functionality, and secure payment integration.',
       icon: <FaMobile />,
-      github: "#",
-      demo: "#",
-      category: "iot"
+      tech: ['Flutter', 'Dart', 'Firebase', 'Stripe API', 'Redux'],
+      github: 'https://github.com/KeshavShanmukh/flutter-ecommerce',
+      demo: '#'
     },
     {
-      id: 3,
-      title: "Quantum-Safe CLI Encryption Tool",
-      description: "Command-line tool implementing AES 256 encryption combined with lattice-based quantum-safe cryptographic algorithms to protect against future quantum computing threats.",
-      technologies: ["Python", "Cryptography", "AES-256", "Lattice-Based"],
+      title: 'MERN Certificate Portfolio',
+      description: 'A full-stack web application for managing and showcasing certificates with dynamic categorization and filtering capabilities.',
       icon: <FaCode />,
-      github: "#",
-      demo: "#",
-      category: "security"
+      tech: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Styled Components'],
+      github: 'https://github.com/KeshavShanmukh/certificate-portfolio',
+      demo: '#'
     },
     {
-      id: 4,
-      title: "College Event Management App",
-      description: "Flutter application with Firebase backend that enhances communication between students and event creators. Faculty admins create events and manage users while students can view and participate in events.",
-      technologies: ["Flutter", "Firebase", "Dart", "Mobile Development"],
-      icon: <FaMobile />,
-      github: "#",
-      demo: "#",
-      category: "mobile"
-    },
-    {
-      id: 5,
-      title: "Personal Portfolio Website",
-      description: "Modern full-stack portfolio application showcasing 17 certificates with dynamic filtering, built with MERN stack and SQLite database for professional presentation.",
-      technologies: ["React", "Node.js", "SQLite", "Styled Components"],
-      icon: <FaCode />,
-      github: "https://github.com/KeshavShanmukh/keshavshanmukhpulikonda-portfolio",
-      demo: "https://keshavshanmukhpulikonda-portfolio.onrender.com",
-      category: "web"
-    },
-    {
-      id: 6,
-      title: "Smart Gardening Device",
-      description: "Upcoming IoT project for automated plant care with smart monitoring, watering systems, and environmental controls for optimal plant growth.",
-      technologies: ["IoT", "Sensors", "Automation", "Arduino"],
+      title: 'Blockchain Voting System',
+      description: 'A secure and transparent voting system built on blockchain technology ensuring immutability and auditability of votes.',
       icon: <FaDatabase />,
-      github: "#",
-      demo: "#",
-      category: "iot"
+      tech: ['Solidity', 'Web3.js', 'React', 'Ethereum', 'IPFS'],
+      github: 'https://github.com/KeshavShanmukh/blockchain-voting',
+      demo: '#'
+    },
+    {
+      title: 'AI-Powered Chatbot',
+      description: 'An intelligent chatbot using natural language processing for customer service automation and query resolution.',
+      icon: <FaCode />,
+      tech: ['Python', 'TensorFlow', 'NLP', 'Flask', 'React'],
+      github: 'https://github.com/KeshavShanmukh/ai-chatbot',
+      demo: '#'
+    },
+    {
+      title: 'Real-Time Collaboration Tool',
+      description: 'A collaborative platform enabling real-time document editing, video conferencing, and team communication features.',
+      icon: <FaCode />,
+      tech: ['Socket.io', 'WebRTC', 'React', 'Node.js', 'MongoDB'],
+      github: 'https://github.com/KeshavShanmukh/collaboration-tool',
+      demo: '#'
     }
   ];
 
