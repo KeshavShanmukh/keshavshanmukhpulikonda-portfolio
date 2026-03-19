@@ -119,54 +119,63 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'Organ Donation Web Application',
-      description: 'A comprehensive web application that shares and manages available donor information across India, connecting donors with recipients in real-time.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
+      title: "Organ Donation Web Application",
+      description: "A comprehensive web platform that shares information about available organ donors across India, connecting donors with recipients and saving lives through technology.",
+      technologies: ["React", "Node.js", "MongoDB", "Express"],
       icon: <FaDatabase />,
-      github: 'https://github.com/KeshavShanmukh/organ-donation-app',
-      demo: 'https://organ-donation-demo.netlify.app',
-      featured: true
+      github: "#",
+      demo: "#",
+      category: "web"
     },
     {
       id: 2,
-      title: 'Smart Home Automation',
-      description: 'IoT-based home automation system for monitoring and controlling electrical appliances manually or through mobile application (local, non-cloud based).',
-      technologies: ['Arduino', 'React Native', 'ESP32', 'Local Network'],
+      title: "Smart Home Automation System",
+      description: "Local home automation system for monitoring and controlling electrical appliances through manual switches and mobile application without cloud dependency for enhanced privacy and security.",
+      technologies: ["Arduino", "IoT", "Mobile App", "Local Network"],
       icon: <FaMobile />,
-      github: 'https://github.com/KeshavShanmukh/smart-home-automation',
-      demo: null,
-      featured: true
+      github: "#",
+      demo: "#",
+      category: "iot"
     },
     {
       id: 3,
-      title: 'Quantum-Safe CLI Encryption Tool',
-      description: 'Command-line tool implementing AES 256 and lattice-based encryption algorithms for quantum-resistant security and data protection.',
-      technologies: ['Python', 'Cryptography', 'AES-256', 'Lattice-Based'],
+      title: "Quantum-Safe CLI Encryption Tool",
+      description: "Command-line tool implementing AES 256 encryption combined with lattice-based quantum-safe cryptographic algorithms to protect against future quantum computing threats.",
+      technologies: ["Python", "Cryptography", "AES-256", "Lattice-Based"],
       icon: <FaCode />,
-      github: 'https://github.com/KeshavShanmukh/quantum-safe-encryption',
-      demo: null,
-      featured: true
+      github: "#",
+      demo: "#",
+      category: "security"
     },
     {
       id: 4,
-      title: 'Personal Portfolio Website',
-      description: 'Full-stack MERN portfolio showcasing 17 certificates with dynamic filtering, modern UI, and responsive design.',
-      technologies: ['React', 'Node.js', 'SQLite', 'Framer Motion'],
-      icon: <FaGithub />,
-      github: 'https://github.com/KeshavShanmukh/keshavshanmukhpulikonda-portfolio',
-      demo: 'https://keshavshanmukhpulikonda-portfolio.onrender.com',
-      featured: true
+      title: "College Event Management App",
+      description: "Flutter application with Firebase backend that enhances communication between students and event creators. Faculty admins create events and manage users while students can view and participate in events.",
+      technologies: ["Flutter", "Firebase", "Dart", "Mobile Development"],
+      icon: <FaMobile />,
+      github: "#",
+      demo: "#",
+      category: "mobile"
     },
     {
       id: 5,
-      title: 'Smart Gardening Device (Upcoming)',
-      description: 'IoT-based smart gardening system for automated plant monitoring, watering, and environmental control for optimal plant growth.',
-      technologies: ['Arduino', 'Sensors', 'IoT', 'Mobile App'],
+      title: "Personal Portfolio Website",
+      description: "Modern full-stack portfolio application showcasing 17 certificates with dynamic filtering, built with MERN stack and SQLite database for professional presentation.",
+      technologies: ["React", "Node.js", "SQLite", "Styled Components"],
       icon: <FaCode />,
-      github: null,
-      demo: null,
-      featured: false,
-      status: 'In Development'
+      github: "https://github.com/KeshavShanmukh/keshavshanmukhpulikonda-portfolio",
+      demo: "https://keshavshanmukhpulikonda-portfolio.onrender.com",
+      category: "web"
+    },
+    {
+      id: 6,
+      title: "Smart Gardening Device",
+      description: "Upcoming IoT project for automated plant care with smart monitoring, watering systems, and environmental controls for optimal plant growth.",
+      technologies: ["IoT", "Sensors", "Automation", "Arduino"],
+      icon: <FaDatabase />,
+      github: "#",
+      demo: "#",
+      category: "iot"
     }
   ];
 

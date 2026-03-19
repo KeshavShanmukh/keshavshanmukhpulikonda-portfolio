@@ -20,6 +20,7 @@ const AnimatedBackground = styled.div`
   right: 0;
   bottom: 0;
   overflow: hidden;
+  z-index: 0;
 
   &::before,
   &::after {
@@ -31,23 +32,77 @@ const AnimatedBackground = styled.div`
   }
 
   &::before {
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
     top: -200px;
     right: -200px;
+    animation-delay: 0s;
   }
 
   &::after {
-    width: 800px;
-    height: 800px;
-    bottom: -300px;
-    left: -300px;
-    animation-delay: 10s;
+    width: 300px;
+    height: 300px;
+    bottom: -150px;
+    left: -150px;
+    animation-delay: 5s;
+  }
+
+  .floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.08), transparent);
+    animation: orbFloat 15s ease-in-out infinite;
+  }
+
+  .orb1 {
+    width: 200px;
+    height: 200px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 2s;
+  }
+
+  .orb2 {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 7s;
+  }
+
+  .orb3 {
+    width: 100px;
+    height: 100px;
+    bottom: 30%;
+    left: 70%;
+    animation-delay: 12s;
   }
 
   @keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(-30px, 30px) rotate(180deg); }
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+      transform: translate(-30px, 30px) rotate(120deg);
+    }
+    66% {
+      transform: translate(30px, -30px) rotate(240deg);
+    }
+  }
+
+  @keyframes orbFloat {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(50px, -30px) scale(1.1);
+    }
+    50% {
+      transform: translate(-30px, 50px) scale(0.9);
+    }
+    75% {
+      transform: translate(-50px, -50px) scale(1.05);
+    }
   }
 `;
 
@@ -228,7 +283,11 @@ const Hero = () => {
 
   return (
     <HeroContainer id="home">
-      <AnimatedBackground />
+      <AnimatedBackground>
+        <div className="floating-orb orb1"></div>
+        <div className="floating-orb orb2"></div>
+        <div className="floating-orb orb3"></div>
+      </AnimatedBackground>
       
       <HeroContent>
         <Greeting
