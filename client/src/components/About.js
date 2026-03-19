@@ -1,13 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
-import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaGraduationCap, FaBriefcase, FaAward } from 'react-icons/fa';
 
 const AboutContainer = styled.section`
   padding: 5rem 0;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
   position: relative;
   overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
 `;
 
 const Container = styled.div`
@@ -55,10 +67,28 @@ const AboutCard = styled(motion.div)`
   padding: 2.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.3);
   }
 `;
 
@@ -108,28 +138,111 @@ const SocialLink = styled(motion.a)`
   font-size: 1.2rem;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+  }
+
+  &:hover::before {
+    width: 100%;
+    height: 100%;
+  }
 
   &:hover {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+  }
+
+  svg {
+    position: relative;
+    z-index: 1;
   }
 `;
 
+const StatCard = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.3);
+  }
+`;
+
+const StatNumber = styled.div`
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+`;
+
+const StatLabel = styled.div`
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+`;
+
+const FloatingBadge = styled(motion.div)`
+  position: absolute;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  z-index: 10;
+`;
+
 const About = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <AboutContainer id="about">
+    <AboutContainer id="about" ref={ref}>
+      <FloatingBadge
+        style={{ top: '10%', right: '10%' }}
+        animate={{
+          y: [0, -10, 0],
+          opacity: [0, 1, 1, 0]
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+      >
+        <FaAward style={{ marginRight: '0.5rem' }} />
+        IoT Expert
+      </FloatingBadge>
+
       <Container>
         <SectionHeader>
           <Title
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
             <FaUser style={{ marginRight: '1rem' }} />
             About Me
           </Title>
-          <Subtitle>
+          <Subtitle
+            initial={{ opacity: 0, y: -10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             Passionate IoT developer and full-stack engineer creating innovative solutions
           </Subtitle>
         </SectionHeader>
@@ -137,8 +250,9 @@ const About = () => {
         <AboutGrid>
           <AboutCard
             initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            whileHover={{ y: -5 }}
           >
             <AboutText>
               I'm a 3rd-year B.Tech student in IoT from Vijayawada, passionate about creating 
@@ -153,31 +267,75 @@ const About = () => {
               technology has been driven by curiosity and a desire to solve meaningful problems 
               through innovation.
             </AboutText>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginTop: '2rem' }}>
+              <StatCard
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <StatNumber>3+</StatNumber>
+                <StatLabel>Years Experience</StatLabel>
+              </StatCard>
+              <StatCard
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.7 }}
+              >
+                <StatNumber>15+</StatNumber>
+                <StatLabel>Projects</StatLabel>
+              </StatCard>
+              <StatCard
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                <StatNumber>5+</StatNumber>
+                <StatLabel>Certifications</StatLabel>
+              </StatCard>
+            </div>
           </AboutCard>
 
           <div>
             <AboutCard
               initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ y: -5 }}
             >
               <InfoList>
-                <InfoItem>
+                <InfoItem
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
                   <InfoIcon><FaUser /></InfoIcon>
                   <span>Pulikonda Keshav Shanmukh</span>
                 </InfoItem>
                 
-                <InfoItem>
+                <InfoItem
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
                   <InfoIcon><FaMapMarkerAlt /></InfoIcon>
                   <span>Vijayawada, Andhra Pradesh, India</span>
                 </InfoItem>
                 
-                <InfoItem>
+                <InfoItem
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                >
                   <InfoIcon><FaEnvelope /></InfoIcon>
                   <span>keshavshanmukh25@gmail.com</span>
                 </InfoItem>
                 
-                <InfoItem>
+                <InfoItem
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
                   <InfoIcon><FaPhone /></InfoIcon>
                   <span>+91-9515037980</span>
                 </InfoItem>
@@ -190,6 +348,9 @@ const About = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.5, delay: 0.9 }}
                 >
                   <FaLinkedin />
                 </SocialLink>
@@ -200,6 +361,9 @@ const About = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.5, delay: 1 }}
                 >
                   <FaGithub />
                 </SocialLink>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaStar, FaCode, FaRocket } from 'react-icons/fa';
 
 const HeroContainer = styled.section`
   min-height: 100vh;
@@ -10,7 +10,73 @@ const HeroContainer = styled.section`
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(-45deg, #0f0f1e, #1a1a2e, #16213e, #0f3460, #533483);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+`;
+
+const Particle = styled(motion.div)`
+  position: absolute;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: radial-gradient(circle, ${props => props.color}, transparent);
+  border-radius: 50%;
+  filter: blur(1px);
+  pointer-events: none;
+`;
+
+const GeometricShape = styled(motion.div)`
+  position: absolute;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  background: rgba(102, 126, 234, 0.05);
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  
+  ${props => props.shape === 'triangle' && `
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 43px solid rgba(102, 126, 234, 0.2);
+    border-top: none;
+  `}
+  
+  ${props => props.shape === 'square' && `
+    width: 40px;
+    height: 40px;
+    transform: rotate(45deg);
+  `}
+  
+  ${props => props.shape === 'hexagon' && `
+    width: 50px;
+    height: 28px;
+    position: relative;
+    background: rgba(102, 126, 234, 0.1);
+    
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      width: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+    }
+    
+    &:before {
+      bottom: 100%;
+      border-bottom: 14px solid rgba(102, 126, 234, 0.1);
+    }
+    
+    &:after {
+      top: 100%;
+      border-top: 14px solid rgba(102, 126, 234, 0.1);
+    }
+  `}
 `;
 
 const AnimatedBackground = styled.div`
@@ -48,6 +114,25 @@ const AnimatedBackground = styled.div`
   @keyframes float {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
     50% { transform: translate(-30px, 30px) rotate(180deg); }
+  }
+`;
+
+const GridOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(102, 126, 234, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+
+  @keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
   }
 `;
 
@@ -160,12 +245,43 @@ const SocialLink = styled(motion.a)`
   font-size: 1.2rem;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+  }
+
+  &:hover::before {
+    width: 100%;
+    height: 100%;
+  }
 
   &:hover {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
   }
+
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+`;
+
+const FloatingIcon = styled(motion.div)`
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(102, 126, 234, 0.6);
+  pointer-events: none;
 `;
 
 
@@ -174,6 +290,9 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [particles, setParticles] = useState([]);
+  const [shapes, setShapes] = useState([]);
+  const containerRef = useRef(null);
 
   const titles = [
     'IoT Developer',
@@ -182,6 +301,32 @@ const Hero = () => {
     'Flutter Developer',
     'Tech Enthusiast'
   ];
+
+  useEffect(() => {
+    // Generate particles
+    const newParticles = Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 1,
+      color: `rgba(${Math.random() * 100 + 100}, ${Math.random() * 100 + 100}, 234, ${Math.random() * 0.5 + 0.3})`,
+      duration: Math.random() * 20 + 10,
+      delay: Math.random() * 5
+    }));
+    setParticles(newParticles);
+
+    // Generate geometric shapes
+    const newShapes = Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      shape: ['triangle', 'square', 'hexagon'][Math.floor(Math.random() * 3)],
+      size: Math.random() * 30 + 20,
+      duration: Math.random() * 15 + 10,
+      delay: Math.random() * 5
+    }));
+    setShapes(newShapes);
+  }, []);
 
   useEffect(() => {
     const handleTyping = () => {
@@ -215,8 +360,98 @@ const Hero = () => {
   };
 
   return (
-    <HeroContainer id="home">
+    <HeroContainer id="home" ref={containerRef}>
+      <GridOverlay />
       <AnimatedBackground />
+      
+      {/* Animated Particles */}
+      <AnimatePresence>
+        {particles.map((particle) => (
+          <Particle
+            key={particle.id}
+            size={particle.size}
+            color={particle.color}
+            initial={{ 
+              x: `${particle.x}%`, 
+              y: `${particle.y}%`,
+              opacity: 0
+            }}
+            animate={{ 
+              x: `${particle.x}%`, 
+              y: `${particle.y - 20}%`,
+              opacity: [0, 1, 0],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{ 
+              duration: particle.duration,
+              delay: particle.delay,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* Floating Geometric Shapes */}
+      <AnimatePresence>
+        {shapes.map((shape) => (
+          <GeometricShape
+            key={shape.id}
+            shape={shape.shape}
+            style={{
+              left: `${shape.x}%`,
+              top: `${shape.y}%`,
+            }}
+            initial={{ opacity: 0, rotate: 0 }}
+            animate={{ 
+              opacity: [0, 0.6, 0],
+              rotate: 360,
+              x: [0, 30, -30, 0],
+              y: [0, -30, 30, 0]
+            }}
+            transition={{ 
+              duration: shape.duration,
+              delay: shape.delay,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* Floating Icons */}
+      <FloatingIcon
+        style={{ top: '20%', left: '10%' }}
+        animate={{ 
+          y: [0, -20, 0],
+          rotate: [0, 10, -10, 0]
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+      >
+        <FaCode />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ top: '30%', right: '15%' }}
+        animate={{ 
+          y: [0, -15, 0],
+          rotate: [0, -15, 15, 0]
+        }}
+        transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+      >
+        <FaRocket />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '30%', left: '15%' }}
+        animate={{ 
+          y: [0, -25, 0],
+          rotate: [0, 20, -20, 0]
+        }}
+        transition={{ duration: 5, repeat: Infinity, delay: 2 }}
+      >
+        <FaStar />
+      </FloatingIcon>
       
       <HeroContent>
         <Greeting
@@ -311,8 +546,7 @@ const Hero = () => {
           </SocialLink>
         </SocialLinks>
       </HeroContent>
-      
-          </HeroContainer>
+    </HeroContainer>
   );
 };
 

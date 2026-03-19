@@ -1,13 +1,26 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
-import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling, FaRocket, FaStar, FaTrophy } from 'react-icons/fa';
 
 const ProjectsContainer = styled.section`
   padding: 5rem 0;
-  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 50%, #16213e 100%);
   position: relative;
   overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
 `;
 
 const Container = styled.div`
@@ -48,14 +61,30 @@ const ProjectCard = styled(motion.div)`
   border-radius: 20px;
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.15), transparent);
+    transition: left 0.6s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
 
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
-    border-color: rgba(102, 126, 234, 0.3);
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 30px 60px rgba(102, 126, 234, 0.4);
+    border-color: rgba(102, 126, 234, 0.4);
   }
 `;
 
@@ -63,12 +92,27 @@ const ProjectIcon = styled.div`
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: #667eea;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+
+  ${ProjectCard}:hover & {
+    transform: scale(1.1) rotate(5deg);
+    color: #764ba2;
+  }
 `;
 
 const ProjectTitle = styled.h3`
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: #ffffff;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+
+  ${ProjectCard}:hover & {
+    color: #667eea;
+  }
 `;
 
 const ProjectDescription = styled.p`
@@ -84,12 +128,38 @@ const ProjectTech = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-const TechTag = styled.span`
+const TechTag = styled(motion.span)`
   padding: 0.3rem 0.8rem;
   background: rgba(102, 126, 234, 0.2);
   border-radius: 15px;
   font-size: 0.8rem;
   color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    transition: left 0.4s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px) scale(1.05);
+    color: #ffffff;
+    border-color: rgba(102, 126, 234, 0.5);
+  }
 `;
 
 const ProjectLinks = styled.div`
@@ -97,7 +167,7 @@ const ProjectLinks = styled.div`
   gap: 1rem;
 `;
 
-const ProjectLink = styled.a`
+const ProjectLink = styled(motion.a)`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -108,14 +178,75 @@ const ProjectLink = styled.a`
   border-radius: 20px;
   font-size: 0.9rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+  }
+
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+`;
+
+const FloatingBadge = styled(motion.div)`
+  position: absolute;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const GlowEffect = styled.div`
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
   }
 `;
 
 const Projects = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const projects = [
     {
       title: 'Organ Donation Platform',
@@ -123,7 +254,8 @@ const Projects = () => {
       icon: <FaHeart />,
       tech: ['React', 'Node.js', 'MongoDB', 'Express.js', 'Geolocation API'],
       github: 'https://github.com/KeshavShanmukh/organ-donation-platform',
-      demo: '#'
+      demo: '#',
+      featured: true
     },
     {
       title: 'Mental Health Chatbot',
@@ -163,22 +295,39 @@ const Projects = () => {
       icon: <FaSeedling />,
       tech: ['Arduino', 'Sensors', 'IoT', 'Mobile App', 'Firebase'],
       github: 'https://github.com/KeshavShanmukh/smart-gardening-system',
-      demo: '#'
+      demo: '#',
+      upcoming: true
     }
   ];
 
   return (
-    <ProjectsContainer id="projects">
+    <ProjectsContainer id="projects" ref={ref}>
+      <FloatingBadge
+        style={{ top: '10%', right: '10%' }}
+        animate={{
+          y: [0, -15, 0],
+          opacity: [0, 1, 1, 0]
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+      >
+        <FaTrophy style={{ marginRight: '0.5rem' }} />
+        Award Winning
+      </FloatingBadge>
+
       <Container>
         <SectionHeader>
           <Title
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
           >
             Featured Projects
           </Title>
-          <Subtitle>
+          <Subtitle
+            initial={{ opacity: 0, y: -10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             A collection of my innovative projects showcasing skills in IoT, mobile development, and full-stack applications
           </Subtitle>
         </SectionHeader>
@@ -187,11 +336,35 @@ const Projects = () => {
           {projects.map((project, index) => (
             <ProjectCard
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -12, scale: 1.03 }}
             >
+              <GlowEffect />
+              
+              {project.featured && (
+                <motion.div
+                  style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 3 }}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.15 + 0.5 }}
+                >
+                  <FaStar style={{ color: '#ffd700', fontSize: '1.2rem' }} />
+                </motion.div>
+              )}
+              
+              {project.upcoming && (
+                <motion.div
+                  style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 3 }}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.15 + 0.5 }}
+                >
+                  <FaRocket style={{ color: '#667eea', fontSize: '1.2rem' }} />
+                </motion.div>
+              )}
+              
               <ProjectIcon>{project.icon}</ProjectIcon>
               
               <ProjectTitle>{project.title}</ProjectTitle>
@@ -199,8 +372,25 @@ const Projects = () => {
               <ProjectDescription>{project.description}</ProjectDescription>
               
               <ProjectTech>
-                {project.tech.map((tech) => (
-                  <TechTag key={tech}>{tech}</TechTag>
+                {project.tech.map((tech, techIndex) => (
+                  <TechTag
+                    key={tech}
+                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                    animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+                    transition={{ 
+                      duration: 0.4, 
+                      delay: (index * 0.15) + (techIndex * 0.05) + 0.3,
+                      type: "spring",
+                      stiffness: 100
+                    }}
+                    whileHover={{ 
+                      scale: 1.1, 
+                      y: -2,
+                      boxShadow: "0 5px 15px rgba(102, 126, 234, 0.4)"
+                    }}
+                  >
+                    {tech}
+                  </TechTag>
                 ))}
               </ProjectTech>
               
@@ -209,16 +399,26 @@ const Projects = () => {
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: index * 0.15 + 0.6 }}
                 >
-                  <FaGithub /> Code
+                  <FaGithub /> <span>Code</span>
                 </ProjectLink>
                 
                 <ProjectLink
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: index * 0.15 + 0.7 }}
                 >
-                  <FaExternalLinkAlt /> Demo
+                  <FaExternalLinkAlt /> <span>Demo</span>
                 </ProjectLink>
               </ProjectLinks>
             </ProjectCard>
