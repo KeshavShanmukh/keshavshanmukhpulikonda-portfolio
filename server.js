@@ -30,13 +30,14 @@ const db = new sqlite3.Database(dbPath, (err) => {
         console.error('Error opening database:', err.message);
     } else {
         console.log('Connected to SQLite database');
-        createTables();
-        seedCertificates();
+        createTables(() => {
+            seedCertificates();
+        });
     }
 });
 
 // Create tables
-const createTables = () => {
+const createTables = (callback) => {
     const createCertificatesTable = `
         CREATE TABLE IF NOT EXISTS certificates (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,6 +60,7 @@ const createTables = () => {
             console.error('Error creating certificates table:', err.message);
         } else {
             console.log('Certificates table created or already exists');
+            if (callback) callback();
         }
     });
 };
