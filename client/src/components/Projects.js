@@ -118,52 +118,55 @@ const ProjectLink = styled.a`
 const Projects = () => {
   const projects = [
     {
-      title: 'IoT Smart Agriculture System',
-      description: 'An IoT-based agricultural monitoring system using sensors to track soil moisture, temperature, and humidity for optimal crop management.',
+      id: 1,
+      title: 'Organ Donation Web Application',
+      description: 'A comprehensive web application that shares and manages available donor information across India, connecting donors with recipients in real-time.',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
       icon: <FaDatabase />,
-      tech: ['Arduino', 'NodeMCU', 'MQTT', 'Firebase', 'React'],
-      github: 'https://github.com/KeshavShanmukh/smart-agriculture',
-      demo: '#'
+      github: 'https://github.com/KeshavShanmukh/organ-donation-app',
+      demo: 'https://organ-donation-demo.netlify.app',
+      featured: true
     },
     {
-      title: 'Flutter E-Commerce App',
-      description: 'A mobile e-commerce application built with Flutter featuring product catalog, cart functionality, and secure payment integration.',
+      id: 2,
+      title: 'Smart Home Automation',
+      description: 'IoT-based home automation system for monitoring and controlling electrical appliances manually or through mobile application (local, non-cloud based).',
+      technologies: ['Arduino', 'React Native', 'ESP32', 'Local Network'],
       icon: <FaMobile />,
-      tech: ['Flutter', 'Dart', 'Firebase', 'Stripe API', 'Redux'],
-      github: 'https://github.com/KeshavShanmukh/flutter-ecommerce',
-      demo: '#'
+      github: 'https://github.com/KeshavShanmukh/smart-home-automation',
+      demo: null,
+      featured: true
     },
     {
-      title: 'MERN Certificate Portfolio',
-      description: 'A full-stack web application for managing and showcasing certificates with dynamic categorization and filtering capabilities.',
+      id: 3,
+      title: 'Quantum-Safe CLI Encryption Tool',
+      description: 'Command-line tool implementing AES 256 and lattice-based encryption algorithms for quantum-resistant security and data protection.',
+      technologies: ['Python', 'Cryptography', 'AES-256', 'Lattice-Based'],
       icon: <FaCode />,
-      tech: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Styled Components'],
-      github: 'https://github.com/KeshavShanmukh/certificate-portfolio',
-      demo: '#'
+      github: 'https://github.com/KeshavShanmukh/quantum-safe-encryption',
+      demo: null,
+      featured: true
     },
     {
-      title: 'Blockchain Voting System',
-      description: 'A secure and transparent voting system built on blockchain technology ensuring immutability and auditability of votes.',
-      icon: <FaDatabase />,
-      tech: ['Solidity', 'Web3.js', 'React', 'Ethereum', 'IPFS'],
-      github: 'https://github.com/KeshavShanmukh/blockchain-voting',
-      demo: '#'
+      id: 4,
+      title: 'Personal Portfolio Website',
+      description: 'Full-stack MERN portfolio showcasing 17 certificates with dynamic filtering, modern UI, and responsive design.',
+      technologies: ['React', 'Node.js', 'SQLite', 'Framer Motion'],
+      icon: <FaGithub />,
+      github: 'https://github.com/KeshavShanmukh/keshavshanmukhpulikonda-portfolio',
+      demo: 'https://keshavshanmukhpulikonda-portfolio.onrender.com',
+      featured: true
     },
     {
-      title: 'AI-Powered Chatbot',
-      description: 'An intelligent chatbot using natural language processing for customer service automation and query resolution.',
+      id: 5,
+      title: 'Smart Gardening Device (Upcoming)',
+      description: 'IoT-based smart gardening system for automated plant monitoring, watering, and environmental control for optimal plant growth.',
+      technologies: ['Arduino', 'Sensors', 'IoT', 'Mobile App'],
       icon: <FaCode />,
-      tech: ['Python', 'TensorFlow', 'NLP', 'Flask', 'React'],
-      github: 'https://github.com/KeshavShanmukh/ai-chatbot',
-      demo: '#'
-    },
-    {
-      title: 'Real-Time Collaboration Tool',
-      description: 'A collaborative platform enabling real-time document editing, video conferencing, and team communication features.',
-      icon: <FaCode />,
-      tech: ['Socket.io', 'WebRTC', 'React', 'Node.js', 'MongoDB'],
-      github: 'https://github.com/KeshavShanmukh/collaboration-tool',
-      demo: '#'
+      github: null,
+      demo: null,
+      featured: false,
+      status: 'In Development'
     }
   ];
 
