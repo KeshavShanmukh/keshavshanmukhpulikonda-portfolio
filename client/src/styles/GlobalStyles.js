@@ -9,68 +9,11 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: 
-      radial-gradient(ellipse at top left, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%),
-      linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
     color: #ffffff;
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    
-    &::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 1;
-      animation: backgroundFloat 20s ease-in-out infinite;
-    }
-    
-    &::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 50px 50px, 50px 50px;
-      pointer-events: none;
-      z-index: 1;
-      animation: backgroundMove 30s linear infinite;
-    }
-  }
-  
-  @keyframes backgroundFloat {
-    0%, 100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    33% {
-      transform: translate(-20px, -20px) rotate(120deg);
-    }
-    66% {
-      transform: translate(20px, -10px) rotate(240deg);
-    }
-  }
-  
-  @keyframes backgroundMove {
-    0% {
-      background-position: 0 0, 0 0;
-    }
-    100% {
-      background-position: 50px 50px, -50px -50px;
-    }
   }
 
   html {
