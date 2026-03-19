@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaArrowDown } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from 'react-icons/fa';
 
 const HeroContainer = styled.section`
   min-height: 100vh;
@@ -168,18 +168,6 @@ const SocialLink = styled(motion.a)`
   }
 `;
 
-const ScrollIndicator = styled(motion.div)`
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
-`;
 
 const Hero = () => {
   const [text, setText] = useState('');
@@ -324,17 +312,7 @@ const Hero = () => {
         </SocialLinks>
       </HeroContent>
       
-      <ScrollIndicator
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 1.5 }}
-        onClick={() => scrollToSection('about')}
-        style={{ cursor: 'pointer' }}
-      >
-        <span>Scroll Down</span>
-        <FaArrowDown style={{ animation: 'bounce 2s infinite' }} />
-      </ScrollIndicator>
-    </HeroContainer>
+          </HeroContainer>
   );
 };
 

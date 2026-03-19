@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling } from 'react-icons/fa';
 
 const ProjectsContainer = styled.section`
   padding: 5rem 0;
@@ -118,51 +118,51 @@ const ProjectLink = styled.a`
 const Projects = () => {
   const projects = [
     {
-      title: 'IoT Smart Agriculture System',
-      description: 'An IoT-based agricultural monitoring system using sensors to track soil moisture, temperature, and humidity for optimal crop management.',
-      icon: <FaDatabase />,
-      tech: ['Arduino', 'NodeMCU', 'MQTT', 'Firebase', 'React'],
-      github: 'https://github.com/KeshavShanmukh/smart-agriculture',
+      title: 'Organ Donation Platform',
+      description: 'A web platform that displays available donor contact details and helps find donors from the same city across India, facilitating life-saving connections.',
+      icon: <FaHeart />,
+      tech: ['React', 'Node.js', 'MongoDB', 'Express.js', 'Geolocation API'],
+      github: 'https://github.com/KeshavShanmukh/organ-donation-platform',
       demo: '#'
     },
     {
-      title: 'Flutter E-Commerce App',
-      description: 'A mobile e-commerce application built with Flutter featuring product catalog, cart functionality, and secure payment integration.',
+      title: 'Mental Health Chatbot',
+      description: 'An AI-powered chatbot that provides therapeutic tasks and guidance for people experiencing negative emotions like anger, sadness, and depression.',
+      icon: <FaCode />,
+      tech: ['Python', 'NLP', 'TensorFlow', 'Flask', 'React'],
+      github: 'https://github.com/KeshavShanmukh/mental-health-chatbot',
+      demo: '#'
+    },
+    {
+      title: 'College Event Management App',
+      description: 'A Flutter-based mobile application with role-based permissions where admins have access to special features not available to general users.',
       icon: <FaMobile />,
-      tech: ['Flutter', 'Dart', 'Firebase', 'Stripe API', 'Redux'],
-      github: 'https://github.com/KeshavShanmukh/flutter-ecommerce',
+      tech: ['Flutter', 'Firebase', 'Dart', 'Authentication', 'Cloud Firestore'],
+      github: 'https://github.com/KeshavShanmukh/college-event-app',
       demo: '#'
     },
     {
-      title: 'MERN Certificate Portfolio',
-      description: 'A full-stack web application for managing and showcasing certificates with dynamic categorization and filtering capabilities.',
-      icon: <FaCode />,
-      tech: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Styled Components'],
-      github: 'https://github.com/KeshavShanmukh/certificate-portfolio',
+      title: 'Smart Home Automation',
+      description: 'An IoT system for controlling electrical appliances manually, through mobile app, and monitoring their status in real-time.',
+      icon: <FaHome />,
+      tech: ['Arduino', 'NodeMCU', 'MQTT', 'React Native', 'Firebase'],
+      github: 'https://github.com/KeshavShanmukh/smart-home-automation',
       demo: '#'
     },
     {
-      title: 'Blockchain Voting System',
-      description: 'A secure and transparent voting system built on blockchain technology ensuring immutability and auditability of votes.',
-      icon: <FaDatabase />,
-      tech: ['Solidity', 'Web3.js', 'React', 'Ethereum', 'IPFS'],
-      github: 'https://github.com/KeshavShanmukh/blockchain-voting',
+      title: 'AES-256 CLI Encryption Tool',
+      description: 'A command-line tool that encrypts and decrypts files using AES-256, with the AES key encrypted using Lattice-based cryptography for enhanced security.',
+      icon: <FaLock />,
+      tech: ['Python', 'Cryptography', 'Lattice Encryption', 'CLI', 'AES-256'],
+      github: 'https://github.com/KeshavShanmukh/aes-lattice-encryption',
       demo: '#'
     },
     {
-      title: 'AI-Powered Chatbot',
-      description: 'An intelligent chatbot using natural language processing for customer service automation and query resolution.',
-      icon: <FaCode />,
-      tech: ['Python', 'TensorFlow', 'NLP', 'Flask', 'React'],
-      github: 'https://github.com/KeshavShanmukh/ai-chatbot',
-      demo: '#'
-    },
-    {
-      title: 'Real-Time Collaboration Tool',
-      description: 'A collaborative platform enabling real-time document editing, video conferencing, and team communication features.',
-      icon: <FaCode />,
-      tech: ['Socket.io', 'WebRTC', 'React', 'Node.js', 'MongoDB'],
-      github: 'https://github.com/KeshavShanmukh/collaboration-tool',
+      title: 'Smart Gardening System',
+      description: 'An upcoming IoT-based smart gardening system for automated plant care, monitoring soil conditions, and optimizing growth parameters.',
+      icon: <FaSeedling />,
+      tech: ['Arduino', 'Sensors', 'IoT', 'Mobile App', 'Firebase'],
+      github: 'https://github.com/KeshavShanmukh/smart-gardening-system',
       demo: '#'
     }
   ];
