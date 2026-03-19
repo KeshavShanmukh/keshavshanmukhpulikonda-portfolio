@@ -366,10 +366,17 @@ const seedCertificates = () => {
 
 // Serve static files from React app in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Check if build directory exists
+    const buildPath = path.join(__dirname, 'client/build');
+    console.log('Serving static files from:', buildPath);
     
+    app.use(express.static(buildPath));
+    
+    // For any request that doesn't match an API route, serve the React app
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+        const indexPath = path.join(buildPath, 'index.html');
+        console.log('Serving index.html from:', indexPath);
+        res.sendFile(indexPath);
     });
 }
 
