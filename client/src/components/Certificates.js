@@ -256,7 +256,7 @@ const categoryLabels = {
 };
 
 const API_BASE = process.env.NODE_ENV === 'production' 
-  ? 'https://your-backend-url.railway.app' // Replace with your Railway URL
+  ? 'https://certificate-portfolio.up.railway.app' // Replace with your actual Railway URL
   : 'http://localhost:5000';
 
 const Certificates = () => {
