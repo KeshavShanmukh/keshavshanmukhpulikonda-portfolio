@@ -35,6 +35,29 @@ const Logo = styled(motion.a)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease-in-out infinite;
+  position: relative;
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
 
   &:hover {
     transform: scale(1.05);
@@ -68,6 +91,18 @@ const NavLink = styled(motion.a)`
   font-weight: 500;
   transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
 
   &::after {
     content: '';
@@ -80,8 +115,19 @@ const NavLink = styled(motion.a)`
     transition: width 0.3s ease;
   }
 
+  &:hover::before {
+    left: 100%;
+  }
+
   &:hover {
     color: #ffffff;
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &.active {
+    color: #667eea;
     &::after {
       width: 100%;
     }
@@ -112,20 +158,70 @@ const SocialLink = styled(motion.a)`
   justify-content: center;
   color: #ffffff;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+  }
+
+  &:hover::before {
+    width: 100%;
+    height: 100%;
+  }
 
   &:hover {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  }
+
+  svg {
+    position: relative;
+    z-index: 1;
   }
 `;
 
-const Hamburger = styled.button`
+const Hamburger = styled(motion.button)`
   display: none;
   background: none;
   border: none;
   color: #ffffff;
   font-size: 1.5rem;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: scale(1.1);
+  }
 
   @media (max-width: 768px) {
     display: block;
@@ -175,23 +271,29 @@ const Header = () => {
           href="#home"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
         >
           Keshav Shanmukh
         </Logo>
 
         <NavLinks isOpen={isOpen}>
-          {['home', 'about', 'skills', 'projects', 'certificates', 'contact'].map((section) => (
-            <li key={section}>
+          {['home', 'about', 'skills', 'projects', 'certificates', 'contact'].map((section, index) => (
+            <motion.li key={section}>
               <NavLink
                 href={`#${section}`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={activeSection === section ? 'active' : ''}
                 onClick={() => scrollToSection(section)}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
               </NavLink>
-            </li>
+            </motion.li>
           ))}
           
           <SocialLinks>
@@ -201,6 +303,9 @@ const Header = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
             >
               <FaLinkedin />
             </SocialLink>
@@ -210,6 +315,9 @@ const Header = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.7 }}
             >
               <FaGithub />
             </SocialLink>
@@ -217,13 +325,23 @@ const Header = () => {
               href="mailto:keshavshanmukh25@gmail.com"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.8 }}
             >
               <FaEnvelope />
             </SocialLink>
           </SocialLinks>
         </NavLinks>
 
-        <Hamburger onClick={toggleMenu}>
+        <Hamburger 
+          onClick={toggleMenu}
+          whileHover={{ scale: 1.1, rotate: 90 }}
+          whileTap={{ scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.9 }}
+        >
           {isOpen ? <FaTimes /> : <FaBars />}
         </Hamburger>
       </NavContainer>
