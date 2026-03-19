@@ -275,14 +275,14 @@ const About = () => {
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
                 <StatNumber>3+</StatNumber>
-                <StatLabel>Years Experience</StatLabel>
+                <StatLabel>Interships</StatLabel>
               </StatCard>
               <StatCard
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.7 }}
               >
-                <StatNumber>15+</StatNumber>
+                <StatNumber>5+</StatNumber>
                 <StatLabel>Projects</StatLabel>
               </StatCard>
               <StatCard
@@ -290,7 +290,7 @@ const About = () => {
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
-                <StatNumber>5+</StatNumber>
+                <StatNumber>17+</StatNumber>
                 <StatLabel>Certifications</StatLabel>
               </StatCard>
             </div>
