@@ -279,7 +279,7 @@ const Header = () => {
         </Logo>
 
         <NavLinks isOpen={isOpen}>
-          {['home', 'about', 'skills', 'projects', 'certificates', 'contact'].map((section, index) => (
+          {['home', 'about', 'skills', 'projects', 'certificates', 'resume', 'contact'].map((section, index) => (
             <motion.li key={section}>
               <NavLink
                 href={`#${section}`}
