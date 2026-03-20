@@ -2,6 +2,10 @@ import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin, FaRocket, FaHeart, FaComments, FaCode, FaLightbulb, FaStar } from 'react-icons/fa';
+import { fadeUp, fadeLeft, fadeRight, stagger, containerVariants, scaleIn } from '../animations';
+import SectionWrapper from './SectionWrapper';
+import BlurOrb from './BlurOrb';
+import axios from 'axios';
 
 const ContactContainer = styled.section`
   padding: 5rem 0;
@@ -405,8 +409,11 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Send SMS notification to your phone
+      await sendSMSNotification(formData);
+      
+      // Show success message
       setShowSuccess(true);
       setFormData({ name: '', email: '', message: '' });
       setIsSubmitting(false);
@@ -415,7 +422,30 @@ const Contact = () => {
       setTimeout(() => {
         setShowSuccess(false);
       }, 5000);
-    }, 2000);
+    } catch (error) {
+      console.error('Error sending notification:', error);
+      setIsSubmitting(false);
+    }
+  };
+
+  const sendSMSNotification = async (formData) => {
+    try {
+      const message = `New contact from ${formData.name} (${formData.email}): ${formData.message}`;
+      
+      // You can use any SMS API service here
+      // Example using a free SMS service or email-to-SMS gateway
+      console.log('SMS Notification:', message);
+      
+      // For demo purposes, we'll just log it
+      // In production, you would use a service like:
+      // - Twilio
+      // - AWS SNS
+      // - MessageBird
+      // - Any Indian SMS gateway
+      
+    } catch (error) {
+      console.error('SMS notification failed:', error);
+    }
   };
 
   return (
