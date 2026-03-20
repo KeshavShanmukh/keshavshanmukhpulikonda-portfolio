@@ -372,14 +372,6 @@ const FloatingBadge = styled(motion.div)`
   gap: 0.5rem;
 `;
 
-const FloatingIcon = styled(motion.div)`
-  position: absolute;
-  font-size: 3rem;
-  color: rgba(102, 126, 234, 0.2);
-  pointer-events: none;
-  z-index: 0;
-`;
-
 const SuccessMessage = styled(motion.div)`
   background: linear-gradient(135deg, #00b894, #00cec9);
   color: white;
