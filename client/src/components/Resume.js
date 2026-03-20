@@ -183,11 +183,11 @@ const Resume = () => {
               <FaUser /> Professional Summary
             </SectionTitle>
             <motion.p variants={fadeUp} style={{ lineHeight: '1.6', color: '#555' }}>
-              Innovative 3rd-year B.Tech student in IoT with strong expertise in Flutter mobile development, 
-              NodeMCU/Arduino programming, and full-stack web applications. Proven ability to develop 
-              smart infrastructure solutions and blockchain-secured systems. Currently gaining hands-on 
-              experience at Supraja Technologies while maintaining a strong academic record and 17+ 
-              technical certifications.
+              Motivated 3rd-year B.Tech student in Internet of Things with strong foundation in Flutter mobile development, 
+              Arduino programming, and full-stack web development. Passionate about creating innovative IoT solutions 
+              and currently gaining practical experience through internship at Supraja Technologies. Quick learner with 
+              17+ technical certifications and multiple academic projects demonstrating strong problem-solving abilities 
+              and technical skills in emerging technologies.
             </motion.p>
           </Section>
 
@@ -205,6 +205,7 @@ const Resume = () => {
                 <JobDuration>2022 - 2026 (Expected)</JobDuration>
               </JobHeader>
               <JobDescription>
+                <JobDescriptionItem>Current GPA: [Your GPA if you want to include]</JobDescriptionItem>
                 <JobDescriptionItem>Relevant Coursework: IoT Systems, Embedded Systems, Web Development, Mobile Development, Blockchain Technology</JobDescriptionItem>
                 <JobDescriptionItem>Academic Projects: Smart Gardening System, AES-256 Encryption Tool, Organ Donation Platform</JobDescriptionItem>
                 <JobDescriptionItem>Technical Certifications: 17+ certifications in IoT, Web Development, and Cloud Technologies</JobDescriptionItem>
@@ -212,10 +213,10 @@ const Resume = () => {
             </ExperienceItem>
           </Section>
 
-          {/* Experience */}
+          {/* Internship */}
           <Section>
             <SectionTitle>
-              <FaBriefcase /> Professional Experience
+              <FaBriefcase /> Internship Experience
             </SectionTitle>
             <ExperienceItem>
               <JobHeader>
@@ -226,10 +227,10 @@ const Resume = () => {
                 <JobDuration>2024 - Present</JobDuration>
               </JobHeader>
               <JobDescription>
-                <JobDescriptionItem>Developing real-world IoT solutions for smart infrastructure and industrial applications</JobDescriptionItem>
-                <JobDescriptionItem>Implementing full-stack applications with Node.js backend and responsive frontend</JobDescriptionItem>
-                <JobDescriptionItem>Working with sensor networks, data collection systems, and cloud integration</JobDescriptionItem>
-                <JobDescriptionItem>Collaborating with cross-functional teams to deliver scalable IoT solutions</JobDescriptionItem>
+                <JobDescriptionItem>Learning real-world IoT development and smart infrastructure solutions</JobDescriptionItem>
+                <JobDescriptionItem>Gaining hands-on experience with sensor networks and data collection systems</JobDescriptionItem>
+                <JobDescriptionItem>Assisting in full-stack application development with Node.js and React</JobDescriptionItem>
+                <JobDescriptionItem>Collaborating with development teams on IoT prototype projects</JobDescriptionItem>
               </JobDescription>
             </ExperienceItem>
           </Section>
