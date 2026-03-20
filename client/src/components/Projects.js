@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
 import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling, FaRocket, FaStar, FaTrophy, FaLightbulb, FaCogs, FaRocket as FaRocketIcon } from 'react-icons/fa';
+import { fadeUp, fadeLeft, fadeRight, stagger, cardVariants, containerVariants } from '../animations';
+import SectionWrapper from './SectionWrapper';
+import BlurOrb from './BlurOrb';
 
 const ProjectsContainer = styled.section`
   padding: 5rem 0;
@@ -64,11 +67,11 @@ const ProjectsGrid = styled.div`
 
 const ProjectCard = styled(motion.div)`
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   border-radius: 20px;
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -90,7 +93,7 @@ const ProjectCard = styled(motion.div)`
 
   &:hover {
     transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 30px 60px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
     border-color: rgba(102, 126, 234, 0.4);
   }
 `;
@@ -308,176 +311,217 @@ const Projects = () => {
   ];
 
   return (
-    <ProjectsContainer id="projects" ref={ref}>
-      {/* Floating Icons */}
-      <FloatingIcon
-        style={{ top: '20%', left: '5%' }}
-        animate={{
-          y: [0, -18, 0],
-          rotate: [0, 15, -15, 0]
-        }}
-        transition={{ duration: 6, repeat: Infinity }}
-      >
-        <FaCode />
-      </FloatingIcon>
-      
-      <FloatingIcon
-        style={{ top: '15%', right: '8%' }}
-        animate={{
-          y: [0, -22, 0],
-          rotate: [0, -20, 20, 0]
-        }}
-        transition={{ duration: 5, repeat: Infinity, delay: 1 }}
-      >
-        <FaRocketIcon />
-      </FloatingIcon>
-      
-      <FloatingIcon
-        style={{ bottom: '25%', left: '10%' }}
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 25, -25, 0]
-        }}
-        transition={{ duration: 7, repeat: Infinity, delay: 2 }}
-      >
-        <FaLightbulb />
-      </FloatingIcon>
-      
-      <FloatingIcon
-        style={{ bottom: '15%', right: '12%' }}
-        animate={{
-          y: [0, -16, 0],
-          rotate: [0, -18, 18, 0]
-        }}
-        transition={{ duration: 4, repeat: Infinity, delay: 3 }}
-      >
-        <FaCogs />
-      </FloatingIcon>
+    <SectionWrapper id="projects" ref={ref}>
+      {/* Blur Orbs */}
+      <BlurOrb style={{ top: "10%", left: "5%" }} />
+      <BlurOrb style={{ bottom: "10%", right: "5%" }} />
 
-      <FloatingBadge
-        style={{ top: '10%', right: '10%' }}
-        animate={{
-          y: [0, -15, 0],
-          opacity: [0, 1, 1, 0]
-        }}
-        transition={{ duration: 4, repeat: Infinity }}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 2rem" }}
       >
-        <FaTrophy style={{ marginRight: '0.5rem' }} />
-        Award Winning
-      </FloatingBadge>
-
-      <Container>
-        <SectionHeader>
-          <Title
-            initial={{ opacity: 0, y: -20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
+        <motion.div
+          variants={fadeUp}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
+        >
+          <motion.h2
+            variants={fadeUp}
+            style={{
+              fontSize: "3rem",
+              fontWeight: "700",
+              marginBottom: "1rem",
+              background: "linear-gradient(135deg, #667eea, #764ba2)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
+            }}
           >
             Featured Projects
-          </Title>
-          <Subtitle
-            initial={{ opacity: 0, y: -10 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            style={{
+              color: "rgba(255, 255, 255, 0.7)",
+              fontSize: "1.2rem"
+            }}
           >
             A collection of my innovative projects showcasing skills in IoT, mobile development, and full-stack applications
-          </Subtitle>
-        </SectionHeader>
+          </motion.p>
+        </motion.div>
 
-        <ProjectsGrid>
+        <motion.div
+          variants={containerVariants}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+            gap: "2rem"
+          }}
+        >
           {projects.map((project, index) => (
             <ProjectCard
-              key={project.title}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -12, scale: 1.03 }}
+              key={index}
+              variants={cardVariants}
+              whileHover={{ scale: 1.05, y: -10 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <GlowEffect />
+              <motion.div
+                variants={fadeUp}
+                style={{
+                  fontSize: "2.5rem",
+                  marginBottom: "1rem",
+                  color: "#667eea",
+                  position: "relative",
+                  zIndex: 2,
+                  transition: "all 0.3s ease"
+                }}
+                whileHover={{ scale: 1.1, rotate: 5 }}
+              >
+                {project.icon}
+              </motion.div>
               
-              {project.featured && (
-                <motion.div
-                  style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 3 }}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.15 + 0.5 }}
-                >
-                  <FaStar style={{ color: '#ffd700', fontSize: '1.2rem' }} />
-                </motion.div>
-              )}
-              
-              {project.upcoming && (
-                <motion.div
-                  style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 3 }}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.15 + 0.5 }}
-                >
-                  <FaRocket style={{ color: '#667eea', fontSize: '1.2rem' }} />
-                </motion.div>
-              )}
-              
-              <ProjectIcon>{project.icon}</ProjectIcon>
-              
-              <ProjectTitle>{project.title}</ProjectTitle>
-              
-              <ProjectDescription>{project.description}</ProjectDescription>
-              
-              <ProjectTech>
+              <motion.h3
+                variants={fadeUp}
+                style={{
+                  fontSize: "1.5rem",
+                  marginBottom: "1rem",
+                  color: "#ffffff",
+                  position: "relative",
+                  zIndex: 2,
+                  transition: "all 0.3s ease"
+                }}
+              >
+                {project.title}
+              </motion.h3>
+
+              <motion.p
+                variants={fadeUp}
+                style={{
+                  color: "rgba(255, 255, 255, 0.7)",
+                  lineHeight: "1.6",
+                  marginBottom: "1.5rem"
+                }}
+              >
+                {project.description}
+              </motion.p>
+
+              <motion.div
+                variants={fadeUp}
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "0.5rem",
+                  marginBottom: "1.5rem"
+                }}
+              >
                 {project.tech.map((tech, techIndex) => (
-                  <TechTag
-                    key={tech}
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                    transition={{ 
-                      duration: 0.4, 
-                      delay: (index * 0.15) + (techIndex * 0.05) + 0.3,
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                    whileHover={{ 
-                      scale: 1.1, 
-                      y: -2,
-                      boxShadow: "0 5px 15px rgba(102, 126, 234, 0.4)"
+                  <motion.span
+                    key={techIndex}
+                    variants={scaleIn}
+                    whileHover={{ y: -2, scale: 1.05 }}
+                    style={{
+                      padding: "0.3rem 0.8rem",
+                      background: "rgba(102, 126, 234, 0.2)",
+                      borderRadius: "15px",
+                      fontSize: "0.8rem",
+                      color: "#667eea",
+                      border: "1px solid rgba(102, 126, 234, 0.3)",
+                      transition: "all 0.3s ease",
+                      position: "relative",
+                      overflow: "hidden"
                     }}
                   >
                     {tech}
-                  </TechTag>
+                  </motion.span>
                 ))}
-              </ProjectTech>
-              
-              <ProjectLinks>
-                <ProjectLink
+              </motion.div>
+
+              <motion.div
+                variants={fadeUp}
+                style={{
+                  display: "flex",
+                  gap: "1rem"
+                }}
+              >
+                <motion.a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  variants={scaleIn}
                   whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: index * 0.15 + 0.6 }}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    padding: "0.6rem 1.2rem",
+                    background: "linear-gradient(135deg, #667eea, #764ba2)",
+                    color: "white",
+                    textDecoration: "none",
+                    borderRadius: "20px",
+                    fontSize: "0.9rem",
+                    transition: "all 0.3s ease",
+                    position: "relative",
+                    overflow: "hidden"
+                  }}
                 >
-                  <FaGithub /> <span>Code</span>
-                </ProjectLink>
+                  <FaGithub />
+                  Code
+                </motion.a>
                 
-                <ProjectLink
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05, y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: index * 0.15 + 0.7 }}
+                {project.demo && project.demo !== '#' && (
+                  <motion.a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={scaleIn}
+                    whileHover={{ scale: 1.05, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      padding: "0.6rem 1.2rem",
+                      background: "rgba(255, 255, 255, 0.1)",
+                      backdropFilter: "blur(10px)",
+                      color: "white",
+                      textDecoration: "none",
+                      borderRadius: "20px",
+                      fontSize: "0.9rem",
+                      border: "1px solid rgba(255, 255, 255, 0.2)",
+                      transition: "all 0.3s ease"
+                    }}
+                  >
+                    <FaExternalLinkAlt />
+                    Demo
+                  </motion.a>
+                )}
+              </motion.div>
+
+              {project.upcoming && (
+                <motion.div
+                  variants={fadeUp}
+                  style={{
+                    marginTop: "1rem",
+                    padding: "0.5rem 1rem",
+                    background: "linear-gradient(135deg, #ff7a00, #ffb347)",
+                    color: "white",
+                    borderRadius: "15px",
+                    fontSize: "0.8rem",
+                    fontWeight: "600",
+                    textAlign: "center"
+                  }}
                 >
-                  <FaExternalLinkAlt /> <span>Demo</span>
-                </ProjectLink>
-              </ProjectLinks>
+                  🚀 Coming Soon
+                </motion.div>
+              )}
             </ProjectCard>
           ))}
-        </ProjectsGrid>
-      </Container>
-    </ProjectsContainer>
+        </motion.div>
+      </motion.div>
+    </SectionWrapper>
   );
 };
 

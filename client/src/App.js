@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -58,6 +58,7 @@ const SectionWrapper = styled(motion.div)`
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -92,6 +93,21 @@ function App() {
 
   return (
     <ThemeProvider>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        style={{
+          scaleX: scrollYProgress,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "4px",
+          background: "linear-gradient(135deg, #667eea, #764ba2)",
+          transformOrigin: "0%",
+          zIndex: 9999
+        }}
+      />
+      
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen
