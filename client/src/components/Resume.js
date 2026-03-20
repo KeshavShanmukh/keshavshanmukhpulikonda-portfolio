@@ -185,7 +185,7 @@ const Resume = () => {
             <motion.p variants={fadeUp} style={{ lineHeight: '1.6', color: '#555' }}>
               Motivated 3rd-year B.Tech student in Internet of Things with strong foundation in Flutter mobile development, 
               Arduino programming, and full-stack web development. Passionate about creating innovative IoT solutions 
-              and currently gaining practical experience through internship at Supraja Technologies. Quick learner with 
+              and currently gaining practical experience of cyber security through internship at Supraja Technologies. Quick learner with 
               17+ technical certifications and multiple academic projects demonstrating strong problem-solving abilities 
               and technical skills in emerging technologies.
             </motion.p>
@@ -205,7 +205,7 @@ const Resume = () => {
                 <JobDuration>2023 - 2027 (Expected)</JobDuration>
               </JobHeader>
               <JobDescription>
-                <JobDescriptionItem>Current GPA: [Your GPA if you want to include]</JobDescriptionItem>
+                <JobDescriptionItem>Current GPA: 7.94</JobDescriptionItem>
                 <JobDescriptionItem>Relevant Coursework: IoT Systems, Embedded Systems, Web Development, Mobile Development, Blockchain Technology</JobDescriptionItem>
                 <JobDescriptionItem>Academic Projects: Smart Gardening System, AES-256 Encryption Tool, Organ Donation Platform</JobDescriptionItem>
                 <JobDescriptionItem>Technical Certifications: 17+ certifications in IoT, Web Development, and Cloud Technologies</JobDescriptionItem>
