@@ -573,6 +573,16 @@ const Hero = () => {
             >
               <FaGithub /> View Projects
             </Button>
+            
+            <Button
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaDownload /> Download Resume
+            </Button>
           </ButtonGroup>
           
           <SocialLinks

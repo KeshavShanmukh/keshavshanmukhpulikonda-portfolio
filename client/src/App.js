@@ -8,7 +8,6 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Certificates from './components/Certificates';
 import Contact from './components/Contact';
-import TextResume from './components/TextResume';
 import Footer from './components/Footer';
 import { ThemeProvider } from './context/ThemeContext';
 import { FaRocket } from 'react-icons/fa';
@@ -166,9 +165,6 @@ function App() {
                   </SectionWrapper>
                   <SectionWrapper variants={sectionVariants}>
                     <Certificates />
-                  </SectionWrapper>
-                  <SectionWrapper variants={sectionVariants}>
-                    <TextResume />
                   </SectionWrapper>
                   <SectionWrapper variants={sectionVariants}>
                     <Contact />

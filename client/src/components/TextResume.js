@@ -40,7 +40,7 @@ const TextResume = () => {
           <p>
             Motivated 3rd-year B.Tech student in Internet of Things with strong foundation in Flutter mobile development, 
             Arduino programming, and full-stack web development. Passionate about creating innovative IoT solutions 
-            and currently gaining practical experience through internship at Supraja Technologies. Quick learner with 
+            and currently gaining practical experience of ethical hacking through internship at Supraja Technologies. Quick learner with 
             17+ technical certifications and multiple academic projects demonstrating strong problem-solving abilities 
             and technical skills in emerging technologies.
           </p>
