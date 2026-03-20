@@ -143,9 +143,13 @@ const HeroContent = styled.div`
   justify-content: space-between;
   gap: 3rem;
   z-index: 2;
-  max-width: 1100px;
+  max-width: 1200px;
   width: 100%;
   padding: 0 2rem;
+
+  @media (max-width: 1024px) {
+    gap: 2rem;
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -164,16 +168,20 @@ const Name = styled(motion.h1)`
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+
+  background: linear-gradient(270deg, #ff7a00, #ff00cc, #00dbde);
+  background-size: 600% 600%;
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  background-size: 200% 200%;
-  animation: gradientShift 3s ease-in-out infinite;
 
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
+  animation: gradientMove 6s ease infinite;
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 `;
 
@@ -200,7 +208,7 @@ const ButtonGroup = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
+    width: 100%;
   }
 `;
 
@@ -212,25 +220,28 @@ const Button = styled(motion.a)`
   border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
 
-  ${props => props.primary ? `
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  color: white;
+
+  border: 1px solid rgba(255,255,255,0.2);
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+
+  ${props => props.primary && `
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     
     &:hover {
       box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-      transform: translateY(-2px);
-    }
-  ` : `
-    background: transparent;
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-5px) scale(1.05);
     }
   `}
 `;
@@ -246,44 +257,23 @@ const SocialLink = styled(motion.a)`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+
+  background: rgba(255,255,255,0.1);
   backdrop-filter: blur(10px);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: white;
   font-size: 1.2rem;
+
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    transform: translate(-50%, -50%);
-    transition: all 0.5s ease;
-  }
-
-  &:hover::before {
-    width: 100%;
-    height: 100%;
-  }
 
   &:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-  }
-
-  svg {
-    position: relative;
-    z-index: 1;
+    transform: translateY(-8px) scale(1.2);
+    background: linear-gradient(135deg, #ff7a00, #ff00cc);
+    box-shadow: 0 10px 30px rgba(255,0,200,0.4);
   }
 `;
 
@@ -300,14 +290,46 @@ const FloatingIcon = styled(motion.div)`
 
 const ImageWrapper = styled(motion.div)`
   position: relative;
-  width: 280px;
-  height: 320px;
+  width: 300px;
+  height: 340px;
   background: linear-gradient(135deg, #ff7a00, #ffb347);
   border-radius: 60% 40% 50% 50% / 40% 60% 50% 60%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 20px 50px rgba(255, 122, 0, 0.4);
+
+  box-shadow: 
+    0 20px 60px rgba(255, 122, 0, 0.5),
+    inset 0 0 30px rgba(255,255,255,0.2);
+
+  animation: floatBlob 6s ease-in-out infinite;
+
+  @keyframes floatBlob {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @media (max-width: 768px) {
+    width: 220px;
+    height: 260px;
+  }
+`;
+
+const GlowRing = styled.div`
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #ff7a00, #ff00cc, #00dbde);
+  filter: blur(25px);
+  opacity: 0.6;
+  z-index: -1;
+  animation: rotateGlow 10s linear infinite;
+
+  @keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 `;
 
 const ProfileImage = styled.img`
@@ -315,6 +337,31 @@ const ProfileImage = styled.img`
   height: 85%;
   object-fit: cover;
   border-radius: 30px;
+  transition: all 0.4s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const CursorGlow = styled.div`
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 122, 0, 0.25), transparent 60%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  filter: blur(40px);
+`;
+
+const BlurOrb = styled.div`
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #ff7a00, transparent);
+  filter: blur(120px);
+  opacity: 0.3;
 `;
 
 
@@ -325,7 +372,16 @@ const Hero = () => {
   const [typingSpeed, setTypingSpeed] = useState(150);
   const [particles, setParticles] = useState([]);
   const [shapes, setShapes] = useState([]);
+  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const moveCursor = (e) => {
+      setCursor({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", moveCursor);
+    return () => window.removeEventListener("mousemove", moveCursor);
+  }, []);
 
   const titles = [
     'IoT Developer',
@@ -394,8 +450,13 @@ const Hero = () => {
 
   return (
     <HeroContainer id="home" ref={containerRef}>
+      <CursorGlow style={{ left: cursor.x, top: cursor.y }} />
       <GridOverlay />
       <AnimatedBackground />
+      
+      {/* Blur Orbs */}
+      <BlurOrb style={{ top: "10%", left: "5%" }} />
+      <BlurOrb style={{ bottom: "10%", right: "5%" }} />
       
       {/* Animated Particles */}
       <AnimatePresence>
@@ -523,6 +584,39 @@ const Hero = () => {
             blockchain-secured systems, and full-stack applications.
           </Description>
           
+          {/* GitHub Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '1rem',
+              marginBottom: '2rem'
+            }}
+          >
+            <img
+              src="https://github-readme-stats.vercel.app/api?username=KeshavShanmukh&show_icons=true&theme=tokyonight"
+              alt="GitHub Stats"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                borderRadius: '10px'
+              }}
+            />
+            <img
+              src="https://github-readme-streak-stats.herokuapp.com/?user=KeshavShanmukh&theme=tokyonight"
+              alt="GitHub Streak"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                borderRadius: '10px'
+              }}
+            />
+          </motion.div>
+          
           <ButtonGroup
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -588,6 +682,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           whileHover={{ scale: 1.05, rotate: 2 }}
         >
+          <GlowRing />
           <ProfileImage src={profileImage} alt="Profile" />
         </ImageWrapper>
       </HeroContent>
