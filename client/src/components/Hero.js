@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaStar, FaCode, FaRocket } from 'react-icons/fa';
-import profileImage from '../assets/profile-image.png';
 
 const HeroContainer = styled.section`
   min-height: 100vh;
@@ -285,21 +284,6 @@ const FloatingIcon = styled(motion.div)`
   pointer-events: none;
 `;
 
-const ProfileImage = styled(motion.img)`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 4px solid rgba(102, 126, 234, 0.3);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-  margin-bottom: 2rem;
-  object-fit: cover;
-  
-  &:hover {
-    border-color: rgba(102, 126, 234, 0.6);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-  }
-`;
-
 
 const Hero = () => {
   const [text, setText] = useState('');
@@ -470,15 +454,6 @@ const Hero = () => {
       </FloatingIcon>
       
       <HeroContent>
-        <ProfileImage
-          src={profileImage}
-          alt="Pulikonda Keshav Shanmukh"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          whileHover={{ scale: 1.05 }}
-        />
-        
         <Greeting
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
