@@ -552,39 +552,6 @@ const Hero = () => {
             blockchain-secured systems, and full-stack applications.
           </Description>
           
-          {/* GitHub Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '1rem',
-              marginBottom: '2rem'
-            }}
-          >
-            <img
-              src="https://github-readme-stats.vercel.app/api?username=KeshavShanmukh&show_icons=true&theme=tokyonight"
-              alt="GitHub Stats"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                borderRadius: '10px'
-              }}
-            />
-            <img
-              src="https://github-readme-streak-stats.herokuapp.com/?user=KeshavShanmukh&theme=tokyonight"
-              alt="GitHub Streak"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                borderRadius: '10px'
-              }}
-            />
-          </motion.div>
-          
           <ButtonGroup
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
