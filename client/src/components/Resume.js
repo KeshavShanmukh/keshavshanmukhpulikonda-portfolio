@@ -200,9 +200,9 @@ const Resume = () => {
               <JobHeader>
                 <div>
                   <JobTitle>Bachelor of Technology in Internet of Things</JobTitle>
-                  <JobCompany>Lakki Reddy Bali Reddy College of Engineering</JobCompany>
+                  <JobCompany>Potti Sriramulu Chalavadi Mallikarjuna Rao College of Engineering and Technology</JobCompany>
                 </div>
-                <JobDuration>2022 - 2026 (Expected)</JobDuration>
+                <JobDuration>2023 - 2027 (Expected)</JobDuration>
               </JobHeader>
               <JobDescription>
                 <JobDescriptionItem>Current GPA: [Your GPA if you want to include]</JobDescriptionItem>
