@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin, FaRocket, FaHeart, FaComments } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin, FaRocket, FaHeart, FaComments, FaCode, FaLightbulb, FaStar } from 'react-icons/fa';
 
 const ContactContainer = styled.section`
   padding: 5rem 0;
@@ -47,6 +47,13 @@ const Title = styled(motion.h2)`
 const Subtitle = styled.p`
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.2rem;
+`;
+
+const FloatingIcon = styled(motion.div)`
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(102, 126, 234, 0.3);
+  pointer-events: none;
 `;
 
 const ContactGrid = styled.div`
@@ -421,6 +428,51 @@ const Contact = () => {
 
   return (
     <ContactContainer id="contact" ref={ref}>
+      {/* Floating Icons */}
+      <FloatingIcon
+        style={{ top: '20%', left: '5%' }}
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 10, -10, 0]
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      >
+        <FaEnvelope />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ top: '15%', right: '8%' }}
+        animate={{
+          y: [0, -18, 0],
+          rotate: [0, -15, 15, 0]
+        }}
+        transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+      >
+        <FaCode />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '25%', left: '10%' }}
+        animate={{
+          y: [0, -22, 0],
+          rotate: [0, 20, -20, 0]
+        }}
+        transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+      >
+        <FaLightbulb />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '20%', right: '15%' }}
+        animate={{
+          y: [0, -16, 0],
+          rotate: [0, -18, 18, 0]
+        }}
+        transition={{ duration: 4, repeat: Infinity, delay: 3 }}
+      >
+        <FaStar />
+      </FloatingIcon>
+
       <FloatingBadge
         style={{ top: '10%', right: '10%' }}
         animate={{
@@ -432,17 +484,6 @@ const Contact = () => {
         <FaComments style={{ marginRight: '0.5rem' }} />
         Let's Connect
       </FloatingBadge>
-
-      <FloatingIcon
-        style={{ top: '20%', left: '5%' }}
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, -10, 0]
-        }}
-        transition={{ duration: 6, repeat: Infinity }}
-      >
-        <FaEnvelope />
-      </FloatingIcon>
       
       <FloatingIcon
         style={{ bottom: '15%', right: '8%' }}

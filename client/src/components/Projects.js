@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
-import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling, FaRocket, FaStar, FaTrophy } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling, FaRocket, FaStar, FaTrophy, FaLightbulb, FaCogs, FaRocket as FaRocketIcon } from 'react-icons/fa';
 
 const ProjectsContainer = styled.section`
   padding: 5rem 0;
@@ -47,6 +47,13 @@ const Title = styled(motion.h2)`
 const Subtitle = styled.p`
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.2rem;
+`;
+
+const FloatingIcon = styled(motion.div)`
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(102, 126, 234, 0.3);
+  pointer-events: none;
 `;
 
 const ProjectsGrid = styled.div`
@@ -302,6 +309,51 @@ const Projects = () => {
 
   return (
     <ProjectsContainer id="projects" ref={ref}>
+      {/* Floating Icons */}
+      <FloatingIcon
+        style={{ top: '20%', left: '5%' }}
+        animate={{
+          y: [0, -18, 0],
+          rotate: [0, 15, -15, 0]
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      >
+        <FaCode />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ top: '15%', right: '8%' }}
+        animate={{
+          y: [0, -22, 0],
+          rotate: [0, -20, 20, 0]
+        }}
+        transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+      >
+        <FaRocketIcon />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '25%', left: '10%' }}
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 25, -25, 0]
+        }}
+        transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+      >
+        <FaLightbulb />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '15%', right: '12%' }}
+        animate={{
+          y: [0, -16, 0],
+          rotate: [0, -18, 18, 0]
+        }}
+        transition={{ duration: 4, repeat: Infinity, delay: 3 }}
+      >
+        <FaCogs />
+      </FloatingIcon>
+
       <FloatingBadge
         style={{ top: '10%', right: '10%' }}
         animate={{

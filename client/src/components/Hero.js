@@ -292,15 +292,10 @@ const ImageWrapper = styled(motion.div)`
   position: relative;
   width: 300px;
   height: 340px;
-  background: linear-gradient(135deg, #ff7a00, #ffb347);
   border-radius: 60% 40% 50% 50% / 40% 60% 50% 60%;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  box-shadow: 
-    0 20px 60px rgba(255, 122, 0, 0.5),
-    inset 0 0 30px rgba(255,255,255,0.2);
 
   animation: floatBlob 6s ease-in-out infinite;
 
@@ -315,22 +310,6 @@ const ImageWrapper = styled(motion.div)`
   }
 `;
 
-const GlowRing = styled.div`
-  position: absolute;
-  width: 110%;
-  height: 110%;
-  border-radius: inherit;
-  background: linear-gradient(135deg, #ff7a00, #ff00cc, #00dbde);
-  filter: blur(25px);
-  opacity: 0.6;
-  z-index: -1;
-  animation: rotateGlow 10s linear infinite;
-
-  @keyframes rotateGlow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
 
 const ProfileImage = styled.img`
   width: 85%;
@@ -348,21 +327,13 @@ const CursorGlow = styled.div`
   position: fixed;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(255, 122, 0, 0.25), transparent 60%);
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.25), transparent 60%);
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 1;
   filter: blur(40px);
 `;
 
-const BlurOrb = styled.div`
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #ff7a00, transparent);
-  filter: blur(120px);
-  opacity: 0.3;
-`;
 
 
 const Hero = () => {
@@ -454,9 +425,6 @@ const Hero = () => {
       <GridOverlay />
       <AnimatedBackground />
       
-      {/* Blur Orbs */}
-      <BlurOrb style={{ top: "10%", left: "5%" }} />
-      <BlurOrb style={{ bottom: "10%", right: "5%" }} />
       
       {/* Animated Particles */}
       <AnimatePresence>
@@ -682,7 +650,6 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           whileHover={{ scale: 1.05, rotate: 2 }}
         >
-          <GlowRing />
           <ProfileImage src={profileImage} alt="Profile" />
         </ImageWrapper>
       </HeroContent>

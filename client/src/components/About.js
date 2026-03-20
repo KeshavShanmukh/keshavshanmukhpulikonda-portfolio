@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
-import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaGraduationCap, FaBriefcase, FaAward } from 'react-icons/fa';
+import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaGraduationCap, FaBriefcase, FaAward, FaCode, FaRocket, FaLightbulb, FaStar } from 'react-icons/fa';
 
 const AboutContainer = styled.section`
   padding: 5rem 0;
@@ -210,12 +210,64 @@ const FloatingBadge = styled(motion.div)`
   z-index: 10;
 `;
 
+const FloatingIcon = styled(motion.div)`
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(102, 126, 234, 0.3);
+  pointer-events: none;
+`;
+
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <AboutContainer id="about" ref={ref}>
+      {/* Floating Icons */}
+      <FloatingIcon
+        style={{ top: '15%', left: '5%' }}
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 10, -10, 0]
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      >
+        <FaCode />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ top: '25%', right: '8%' }}
+        animate={{
+          y: [0, -15, 0],
+          rotate: [0, -15, 15, 0]
+        }}
+        transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+      >
+        <FaRocket />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '20%', left: '10%' }}
+        animate={{
+          y: [0, -25, 0],
+          rotate: [0, 20, -20, 0]
+        }}
+        transition={{ duration: 7, repeat: Infinity, delay: 2 }}
+      >
+        <FaLightbulb />
+      </FloatingIcon>
+      
+      <FloatingIcon
+        style={{ bottom: '30%', right: '15%' }}
+        animate={{
+          y: [0, -18, 0],
+          rotate: [0, -25, 25, 0]
+        }}
+        transition={{ duration: 4, repeat: Infinity, delay: 3 }}
+      >
+        <FaStar />
+      </FloatingIcon>
+
       <FloatingBadge
         style={{ top: '10%', right: '10%' }}
         animate={{
