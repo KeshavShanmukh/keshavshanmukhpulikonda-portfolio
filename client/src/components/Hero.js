@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaStar, FaCode, FaRocket } from 'react-icons/fa';
+import profileImage from "../assets/profile-image.png";
 
 const HeroContainer = styled.section`
   min-height: 100vh;
@@ -454,6 +455,20 @@ const Hero = () => {
       </FloatingIcon>
       
       <HeroContent>
+        <div style={{ textAlign: "center" }}>
+          <img 
+            src={profileImage} 
+            alt="Profile"
+            style={{
+              width: "180px",
+              height: "180px",
+              borderRadius: "50%",
+              objectFit: "cover",
+              border: "4px solid #00bcd4",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
+            }}
+          />
+        </div>
         <Greeting
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
