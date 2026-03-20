@@ -138,10 +138,19 @@ const GridOverlay = styled.div`
 `;
 
 const HeroContent = styled.div`
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
   z-index: 2;
-  max-width: 800px;
+  max-width: 1100px;
+  width: 100%;
   padding: 0 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 const Greeting = styled(motion.span)`
@@ -278,11 +287,34 @@ const SocialLink = styled(motion.a)`
   }
 `;
 
+const TextContent = styled.div`
+  flex: 1;
+`;
+
 const FloatingIcon = styled(motion.div)`
   position: absolute;
   font-size: 2rem;
   color: rgba(102, 126, 234, 0.6);
   pointer-events: none;
+`;
+
+const ImageWrapper = styled(motion.div)`
+  position: relative;
+  width: 280px;
+  height: 320px;
+  background: linear-gradient(135deg, #ff7a00, #ffb347);
+  border-radius: 60% 40% 50% 50% / 40% 60% 50% 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 50px rgba(255, 122, 0, 0.4);
+`;
+
+const ProfileImage = styled.img`
+  width: 85%;
+  height: 85%;
+  object-fit: cover;
+  border-radius: 30px;
 `;
 
 
@@ -455,111 +487,109 @@ const Hero = () => {
       </FloatingIcon>
       
       <HeroContent>
-        <div style={{ textAlign: "center" }}>
-          <img 
-            src={profileImage} 
-            alt="Profile"
-            style={{
-              width: "180px",
-              height: "180px",
-              borderRadius: "50%",
-              objectFit: "cover",
-              border: "4px solid #00bcd4",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
-            }}
-          />
-        </div>
-        <Greeting
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Hello, I'm
-        </Greeting>
-        
-        <Name
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Pulikonda Keshav Shanmukh
-        </Name>
-        
-        <Title
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          {text}
-          <span style={{ borderRight: '2px solid #667eea' }}></span>
-        </Title>
-        
-        <Description
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          3rd-year B.Tech in IoT specializing in smart infrastructure, blockchain-secured systems, 
-          and full-stack applications. Experienced in Flutter mobile development, NodeMCU/Arduino, 
-          Firebase, and UI/UX design.
-        </Description>
-        
-        <ButtonGroup
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-        >
-          <Button
-            primary
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {/* LEFT SIDE - TEXT */}
+        <TextContent>
+          <Greeting
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <FaEnvelope /> Get In Touch
-          </Button>
+            Hello, I'm
+          </Greeting>
           
-          <Button
-            href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Name
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <FaGithub /> View Projects
-          </Button>
-        </ButtonGroup>
-        
-        <SocialLinks
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1 }}
+            Pulikonda Keshav Shanmukh
+          </Name>
+          
+          <Title
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            {text}
+            <span style={{ borderRight: '2px solid #667eea' }}></span>
+          </Title>
+          
+          <Description
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            3rd-year B.Tech in IoT specializing in smart infrastructure,
+            blockchain-secured systems, and full-stack applications.
+          </Description>
+          
+          <ButtonGroup
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
+            <Button
+              primary
+              href="#contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaEnvelope /> Get In Touch
+            </Button>
+            
+            <Button
+              href="#projects"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaGithub /> View Projects
+            </Button>
+          </ButtonGroup>
+          
+          <SocialLinks
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1 }}
+          >
+            <SocialLink
+              href="https://linkedin.com/in/keshavshanmukhpulikonda"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaLinkedin />
+            </SocialLink>
+            
+            <SocialLink
+              href="https://github.com/KeshavShanmukh"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaGithub />
+            </SocialLink>
+            
+            <SocialLink
+              href="mailto:keshavshanmukh25@gmail.com"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaEnvelope />
+            </SocialLink>
+          </SocialLinks>
+        </TextContent>
+
+        {/* RIGHT SIDE - IMAGE */}
+        <ImageWrapper
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          whileHover={{ scale: 1.05, rotate: 2 }}
         >
-          <SocialLink
-            href="https://linkedin.com/in/keshavshanmukhpulikonda"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <FaLinkedin />
-          </SocialLink>
-          
-          <SocialLink
-            href="https://github.com/KeshavShanmukh"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <FaGithub />
-          </SocialLink>
-          
-          <SocialLink
-            href="mailto:keshavshanmukh25@gmail.com"
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <FaEnvelope />
-          </SocialLink>
-        </SocialLinks>
+          <ProfileImage src={profileImage} alt="Profile" />
+        </ImageWrapper>
       </HeroContent>
     </HeroContainer>
   );
