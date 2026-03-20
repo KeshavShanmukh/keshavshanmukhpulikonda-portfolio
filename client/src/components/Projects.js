@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
 import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling, FaRocket, FaStar, FaTrophy, FaLightbulb, FaCogs, FaRocket as FaRocketIcon } from 'react-icons/fa';
-import { fadeUp, fadeLeft, fadeRight, stagger, cardVariants, containerVariants } from '../animations';
+import { fadeUp, fadeLeft, fadeRight, stagger, cardVariants, containerVariants, scaleIn } from '../animations';
 import SectionWrapper from './SectionWrapper';
 import BlurOrb from './BlurOrb';
 

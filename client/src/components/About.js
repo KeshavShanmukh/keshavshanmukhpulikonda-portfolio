@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
 import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaGraduationCap, FaBriefcase, FaAward, FaCode, FaRocket, FaLightbulb, FaStar } from 'react-icons/fa';
-import { fadeUp, fadeLeft, fadeRight, stagger, containerVariants } from '../animations';
+import { fadeUp, fadeLeft, fadeRight, stagger, containerVariants, scaleIn } from '../animations';
 import SectionWrapper from './SectionWrapper';
 import BlurOrb from './BlurOrb';
 
