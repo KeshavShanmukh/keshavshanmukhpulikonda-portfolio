@@ -7,6 +7,7 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Certificates from './components/Certificates';
+import Resume from './components/Resume';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { ThemeProvider } from './context/ThemeContext';
@@ -165,6 +166,9 @@ function App() {
                   </SectionWrapper>
                   <SectionWrapper variants={sectionVariants}>
                     <Certificates />
+                  </SectionWrapper>
+                  <SectionWrapper variants={sectionVariants}>
+                    <Resume />
                   </SectionWrapper>
                   <SectionWrapper variants={sectionVariants}>
                     <Contact />
