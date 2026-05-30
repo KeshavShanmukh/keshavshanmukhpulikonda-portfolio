@@ -347,25 +347,6 @@ const Hero = () => {
   const containerRef = useRef(null);
   const resumeUrl = '/Keshav_Shanmukh_Pulikonda_Resume.pdf';
 
-  const handleDownload = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(resumeUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Keshav_Shanmukh_Pulikonda_Resume.pdf';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error('Download failed:', error);
-      window.open(resumeUrl, '_blank');
-    }
-  };
-
   useEffect(() => {
     const moveCursor = (e) => {
       setCursor({ x: e.clientX, y: e.clientY });
@@ -595,8 +576,8 @@ const Hero = () => {
             </Button>
             
             <Button
-              as="button"
-              onClick={handleDownload}
+              href={resumeUrl}
+              download="Keshav_Shanmukh_Pulikonda_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
