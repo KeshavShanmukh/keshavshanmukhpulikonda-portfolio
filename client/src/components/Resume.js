@@ -106,6 +106,16 @@ const FileIcon = styled(FaFilePdf)`
 const Resume = () => {
   const resumeUrl = '/Keshav_Shanmukh_Pulikonda_Resume.pdf';
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Keshav_Shanmukh_Pulikonda_Resume.pdf';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <SectionWrapper>
       <BlurOrb style={{ top: "15%", left: "10%" }} />
@@ -139,8 +149,8 @@ const Resume = () => {
                 View Resume
               </ViewButton>
               <DownloadButton
-                href={resumeUrl}
-                download="Keshav_Shanmukh_Pulikonda_Resume.pdf"
+                as="button"
+                onClick={handleDownload}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
