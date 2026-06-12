@@ -292,7 +292,7 @@ const About = () => {
               whileHover={{ y: -5, scale: 1.02 }}
             >
               <motion.p variants={fadeUp} style={{ color: "rgba(255, 255, 255, 0.8)", lineHeight: "1.8", marginBottom: "2rem", fontSize: "1.1rem" }}>
-                I'm a 3rd-year B.Tech student in IoT from Vijayawada, passionate about creating 
+                I'm a 4th-year B.Tech student in IoT from Vijayawada, passionate about creating 
                 smart infrastructure solutions and blockchain-secured systems. With expertise in 
                 Flutter mobile development, NodeMCU/Arduino programming, and full-stack web 
                 applications, I love turning innovative ideas into reality.
