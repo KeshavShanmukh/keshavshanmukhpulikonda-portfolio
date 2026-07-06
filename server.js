@@ -162,7 +162,7 @@ const seedCertificates = () => {
             title: "Internship Completion",
             organization: "Amaravathi Software Solutions",
             date: "Dasara period",
-            description: "Internship completion certificate from Amaravathi Software Solutions during Dasara period",
+            description: "Completed an internship at Amaravathi Software Solutions during the Dasara period and gained practical experience in software development.",
             category: "professional",
             type: "completion",
             certificateFile: "amaravathi-internship-certificate.pdf",
@@ -170,10 +170,21 @@ const seedCertificates = () => {
             featured: 1
         },
         {
-            title: "UI/UX Internship Offer",
+            title: "Flutter Android & iOS Internship",
+            organization: "Datavally",
+            date: "Completed",
+            description: "Completed an internship at Datavally in Flutter Android and iOS development, building mobile application skills and hands-on experience.",
+            category: "professional",
+            type: "completion",
+            certificateFile: "datavally-flutter-internship.pdf",
+            icon: "📱",
+            featured: 1
+        },
+        {
+            title: "Internship Offer Letter",
             organization: "Woject Company",
             date: "2025",
-            description: "Internship offer letter from Woject Company for UI/UX development role",
+            description: "Received an internship offer letter from Woject Company for a UI/UX development role.",
             category: "professional",
             type: "offer-letter",
             // Place the PDF file in the uploads folder, then write its file name here.
@@ -182,10 +193,10 @@ const seedCertificates = () => {
             featured: 1
         },
         {
-            title: "Web Development Internship Offer",
+            title: "Internship Offer Letter",
             organization: "Saiket Company",
             date: "2025",
-            description: "Internship offer letter from Saiket Company for web development position",
+            description: "Received an internship offer letter from Saiket Company for a web development position.",
             category: "professional",
             type: "offer-letter",
             // Place the PDF file in the uploads folder, then write its file name here.
