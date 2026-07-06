@@ -181,6 +181,17 @@ const seedCertificates = () => {
             featured: 1
         },
         {
+            title: "Internship Completion Certificate",
+            organization: "Supraja Technologies",
+            date: "Completed",
+            description: "Completed an internship at Supraja Technologies and received a completion certificate for the experience gained in real-world development work.",
+            category: "professional",
+            type: "completion",
+            certificateFile: "supraja-completion-certificate.pdf",
+            icon: "🏅",
+            featured: 1
+        },
+        {
             title: "Internship Offer Letter",
             organization: "Woject Company",
             date: "2025",
