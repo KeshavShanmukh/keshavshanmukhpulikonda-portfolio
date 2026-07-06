@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// This is a shared layout wrapper used by most sections to keep the page styling consistent.
+// It adds spacing, a background, and soft decorative gradients.
 const SectionWrapper = styled.section`
   padding: 100px 20px;
   position: relative;

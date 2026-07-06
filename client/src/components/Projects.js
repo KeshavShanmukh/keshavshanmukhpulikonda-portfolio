@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+// This section displays featured projects as cards with titles, descriptions, tech stacks,
+// and links to GitHub or demo pages.
 import styled from 'styled-components';
 import { FaGithub, FaExternalLinkAlt, FaCode, FaMobile, FaDatabase, FaHeart, FaHome, FaLock, FaSeedling, FaRocket, FaStar, FaTrophy, FaLightbulb, FaCogs, FaRocket as FaRocketIcon } from 'react-icons/fa';
 import { fadeUp, fadeLeft, fadeRight, stagger, cardVariants, containerVariants, scaleIn } from '../animations';
@@ -254,9 +256,12 @@ const GlowEffect = styled.div`
 `;
 
 const Projects = () => {
+  // ref helps trigger animations when the projects section comes into view.
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  // This array defines the project cards shown on the page.
+  // You can add, remove, or edit projects here to update the portfolio.
   const projects = [
     {
       title: 'Organ Donation Platform',

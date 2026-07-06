@@ -435,6 +435,13 @@ const Certificates = () => {
 
   const getTotalCount = () => certificates.length;
   const getFeaturedCount = () => certificates.filter(cert => cert.featured).length;
+  // This function decides what text appears on the button for each certificate proof.
+  // It helps show whether the item is an offer letter, internship proof, or certificate.
+  const getProofLabel = (certificate) => {
+    if (certificate.type === 'offer-letter') return 'View Offer Letter →';
+    if (certificate.type === 'internship') return 'View Proof PDF →';
+    return 'View Certificate →';
+  };
 
   if (loading) {
     return (
@@ -636,13 +643,16 @@ const Certificates = () => {
                     <span>Verify Certificate →</span>
                   </CertificateLink>
                 ) : certificate.certificateFile ? (
+                  // This is the important part for PDF location.
+                  // The app builds a link like /uploads/your-file-name.pdf
+                  // So your PDF should be placed inside the uploads folder.
                   <CertificateLink 
                     href={`/uploads/${certificate.certificateFile}`} 
                     target="_blank"
                     whileHover={{ scale: 1.05, y: -3 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span>View Certificate →</span>
+                    <span>{getProofLabel(certificate)}</span>
                   </CertificateLink>
                 ) : null}
               </CertificateCard>

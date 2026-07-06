@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
+// This file defines global styles that apply across the whole portfolio.
+// It sets colors, fonts, scrollbars, and reusable utility classes.
 export const GlobalStyles = createGlobalStyle`
   * {
     margin: 0;

@@ -1,3 +1,5 @@
+// This file stores reusable animation presets for the portfolio.
+// They help sections appear smoothly with motion effects.
 export const fadeUp = {
   hidden: { opacity: 0, y: 60 },
   show: {

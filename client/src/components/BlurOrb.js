@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// This reusable component creates a soft blurred decorative circle used behind sections.
+// It adds a subtle glowing effect without affecting layout.
 const BlurOrb = styled.div`
   position: absolute;
   width: 300px;

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+// This is the opening section of the portfolio.
+// It shows the profile, animated intro text, social links, and a button to view or download the resume.
 import styled from 'styled-components';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaStar, FaCode, FaRocket } from 'react-icons/fa';
 import profileImage from "../assets/profile-image.png";
@@ -337,6 +339,7 @@ const CursorGlow = styled.div`
 
 
 const Hero = () => {
+  // These states power the animated typing effect in the hero title.
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
@@ -345,8 +348,10 @@ const Hero = () => {
   const [shapes, setShapes] = useState([]);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
+  // This points to the resume PDF file stored in the public folder.
   const resumeUrl = '/Keshav_Shanmukh_Pulikonda_Resume.pdf';
 
+  // Creates a temporary link so the resume PDF can be downloaded by the browser.
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = resumeUrl;
@@ -365,6 +370,7 @@ const Hero = () => {
     return () => window.removeEventListener("mousemove", moveCursor);
   }, []);
 
+  // These are the rotating job titles shown in the hero section.
   const titles = [
     'IoT Developer',
     'Full-Stack Developer',
@@ -374,7 +380,7 @@ const Hero = () => {
   ];
 
   useEffect(() => {
-    // Generate particles
+    // Generate animated background particles for the hero section.
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -386,7 +392,7 @@ const Hero = () => {
     }));
     setParticles(newParticles);
 
-    // Generate geometric shapes
+    // Generate floating geometric shapes for the decorative background.
     const newShapes = Array.from({ length: 8 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -423,6 +429,7 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
+  // Smoothly scrolls to another section from the hero buttons.
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -559,7 +566,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            3rd-year B.Tech in IoT specializing in smart infrastructure,
+            4th-year B.Tech in IoT specializing in smart infrastructure,
             blockchain-secured systems, and full-stack applications.
           </Description>
           

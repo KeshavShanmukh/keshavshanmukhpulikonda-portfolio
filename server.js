@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
+// This tells the app that any PDF file placed inside the uploads folder can be opened in the browser.
+// Example: /uploads/woject-offer-letter.pdf
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Serve React static files in production
@@ -151,6 +153,9 @@ app.post('/api/certificates', async (req, res) => {
 });
 
 // Seed initial certificates data
+// Each certificate entry can point to a PDF file using certificateFile.
+// Put your PDF in the uploads folder and write only the file name here.
+// Example: certificateFile: "woject-offer-letter.pdf"
 const seedCertificates = () => {
     const certificates = [
         {
@@ -171,6 +176,7 @@ const seedCertificates = () => {
             description: "Internship offer letter from Woject Company for UI/UX development role",
             category: "professional",
             type: "offer-letter",
+            // Place the PDF file in the uploads folder, then write its file name here.
             certificateFile: "woject-offer-letter.pdf",
             icon: "💼",
             featured: 1
@@ -182,6 +188,7 @@ const seedCertificates = () => {
             description: "Internship offer letter from Saiket Company for web development position",
             category: "professional",
             type: "offer-letter",
+            // Place the PDF file in the uploads folder, then write its file name here.
             certificateFile: "saiket-offer-letter.pdf",
             icon: "🌐",
             featured: 1

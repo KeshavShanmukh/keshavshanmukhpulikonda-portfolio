@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+// This section provides contact details and a simple contact form.
+// The form currently logs a message for demonstration, but it can be connected to an SMS/email service later.
 import styled from 'styled-components';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin, FaRocket, FaHeart, FaComments, FaCode, FaLightbulb, FaStar } from 'react-icons/fa';
 import { fadeUp, fadeLeft, fadeRight, stagger, containerVariants, scaleIn } from '../animations';
@@ -388,8 +390,10 @@ const SuccessMessage = styled(motion.div)`
 `;
 
 const Contact = () => {
+  // ref is used to trigger appearance animations when the section enters the viewport.
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  // formData stores the values typed into the contact form fields.
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -398,6 +402,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Updates the current form state whenever the user types in an input field.
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -405,6 +410,7 @@ const Contact = () => {
     });
   };
 
+  // Submits the contact form and shows a success message after the action completes.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -428,6 +434,8 @@ const Contact = () => {
     }
   };
 
+  // This function is the placeholder for sending a notification.
+  // In a real project, you would replace this with Twilio, AWS SNS, or another SMS/email API.
   const sendSMSNotification = async (formData) => {
     try {
       const message = `New contact from ${formData.name} (${formData.email}): ${formData.message}`;

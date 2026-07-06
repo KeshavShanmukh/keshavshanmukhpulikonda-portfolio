@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+// This section introduces the portfolio owner and shows personal information, contact details,
+// and a few highlights such as internships, projects, and certifications.
 import styled from 'styled-components';
 import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaGraduationCap, FaBriefcase, FaAward, FaCode, FaRocket, FaLightbulb, FaStar } from 'react-icons/fa';
 import { fadeUp, fadeLeft, fadeRight, stagger, containerVariants, scaleIn } from '../animations';
@@ -221,6 +223,7 @@ const FloatingIcon = styled(motion.div)`
 `;
 
 const About = () => {
+  // ref is used to detect when this section enters the viewport so the animations can start.
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 

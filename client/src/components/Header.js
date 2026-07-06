@@ -4,6 +4,8 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaBars, FaTimes, FaFileAlt } from 're
 import { useTheme } from '../context/ThemeContext';
 import styled from 'styled-components';
 
+// This component creates the top navigation bar.
+// It contains the logo, section links, social icons, and mobile menu behavior.
 const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
@@ -254,11 +256,14 @@ const Hamburger = styled(motion.button)`
 `;
 
 const Header = () => {
+  // isOpen controls whether the mobile navigation menu is visible.
   const [isOpen, setIsOpen] = useState(false);
+  // activeSection tracks which section the user is currently viewing for highlighting the menu link.
   const [activeSection, setActiveSection] = useState('home');
   const { isScrolled } = useTheme();
 
   useEffect(() => {
+    // This effect watches the page scroll position and updates the active menu item.
     const handleScroll = () => {
       const sections = ['home', 'about', 'skills', 'projects', 'certificates', 'resume', 'contact'];
       const scrollPosition = window.scrollY + 100;
@@ -279,8 +284,10 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Opens or closes the hamburger menu on smaller screens.
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  // Smoothly moves the page to the selected section when a nav item is clicked.
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {

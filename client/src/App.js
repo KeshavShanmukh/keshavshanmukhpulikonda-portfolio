@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
+// This file is the main controller of the portfolio website.
+// It brings together the header, hero section, about section, skills, projects, certificates,
+// resume, contact, and footer into one complete page.
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -58,10 +61,12 @@ const SectionWrapper = styled(motion.div)`
 `;
 
 function App() {
+  // isLoading controls the short intro loading screen shown before the full portfolio appears.
   const [isLoading, setIsLoading] = useState(true);
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
+    // After 2 seconds, the loading screen disappears and the main portfolio content is shown.
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -69,6 +74,7 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // These animation settings are reused for the main content sections so they appear smoothly.
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -110,6 +116,7 @@ function App() {
       />
       
       <AnimatePresence mode="wait">
+        {/* If the app is still loading, show the splash screen. Otherwise show the real portfolio. */}
         {isLoading ? (
           <LoadingScreen
             initial={{ opacity: 0 }}

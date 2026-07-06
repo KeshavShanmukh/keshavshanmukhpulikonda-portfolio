@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+// This component renders the footer section with a short bio, social links, and technology tags.
 import styled from 'styled-components';
 import { FaGithub, FaLinkedin, FaEnvelope, FaHeart } from 'react-icons/fa';
 
@@ -93,6 +94,7 @@ const HeartIcon = styled(FaHeart)`
 `;
 
 const Footer = () => {
+  // The footer is a simple static section that closes the portfolio page nicely.
   return (
     <FooterContainer>
       <Container>

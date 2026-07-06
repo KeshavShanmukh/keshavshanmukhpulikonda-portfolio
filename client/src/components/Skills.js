@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+// This section presents the technical skills as visual cards with labels and progress rings.
 import styled from 'styled-components';
 import { FaCode, FaDatabase, FaMobile, FaReact, FaNodeJs, FaPython, FaRocket, FaLightbulb, FaChartLine } from 'react-icons/fa';
 
@@ -179,9 +180,12 @@ const SkillLevel = styled.div`
 `;
 
 const Skills = () => {
+  // ref helps animate the section when it enters the viewport.
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  // This object stores all the skill groups and their details.
+  // You can edit it to update the displayed skills and proficiency levels.
   const skills = {
     'Frontend Development': {
       icon: <FaReact />,
