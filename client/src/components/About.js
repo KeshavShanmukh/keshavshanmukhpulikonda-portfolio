@@ -310,9 +310,9 @@ const About = () => {
 
               <motion.div variants={containerVariants} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginTop: "2rem" }}>
                 {[
-                  { number: "2", label: "Completed Internships" },
+                  { number: "3", label: "Completed Internships" },
                   { number: "5+", label: "Projects" },
-                  { number: "17+", label: "Certifications" }
+                  { number: "19+", label: "Certifications" }
                 ].map((stat, index) => (
                   <motion.div
                     key={index}
