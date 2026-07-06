@@ -266,7 +266,7 @@ const About = () => {
               fontSize: "1.2rem"
             }}
           >
-            Passionate IoT developer and full-stack engineer creating innovative solutions
+            4th-year B.Tech student in IoT | Flutter & Mobile App Developer | IoT Enthusiast
           </motion.p>
         </motion.div>
 
@@ -295,22 +295,22 @@ const About = () => {
               whileHover={{ y: -5, scale: 1.02 }}
             >
               <motion.p variants={fadeUp} style={{ color: "rgba(255, 255, 255, 0.8)", lineHeight: "1.8", marginBottom: "2rem", fontSize: "1.1rem" }}>
-                I'm a 4th-year B.Tech student in IoT from Vijayawada, passionate about creating 
-                smart infrastructure solutions and blockchain-secured systems. With expertise in 
-                Flutter mobile development, NodeMCU/Arduino programming, and full-stack web 
-                applications, I love turning innovative ideas into reality.
+                I am a 4th-year B.Tech student in IoT from Vijayawada, passionate about building 
+                smart solutions that combine technology, innovation, and real-world impact. My work 
+                focuses on Flutter mobile app development, Android and iOS applications, and IoT-based 
+                systems that solve practical problems.
               </motion.p>
               
               <motion.p variants={fadeUp} style={{ color: "rgba(255, 255, 255, 0.8)", lineHeight: "1.8", marginBottom: "2rem", fontSize: "1.1rem" }}>
-                Currently interning at Supraja Technologies, I'm gaining hands-on experience in 
-                developing real-world IoT solutions and full-stack applications. My journey in 
-                technology has been driven by curiosity and a desire to solve meaningful problems 
-                through innovation.
+                I have successfully completed internships at Amaravathi Software Solutions and Datavally, 
+                where I gained hands-on experience in software development and Flutter Android/iOS 
+                application development. These experiences strengthened my problem-solving skills and 
+                motivated me to continue building impactful projects.
               </motion.p>
 
               <motion.div variants={containerVariants} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginTop: "2rem" }}>
                 {[
-                  { number: "3+", label: "Internships" },
+                  { number: "2", label: "Completed Internships" },
                   { number: "5+", label: "Projects" },
                   { number: "17+", label: "Certifications" }
                 ].map((stat, index) => (
