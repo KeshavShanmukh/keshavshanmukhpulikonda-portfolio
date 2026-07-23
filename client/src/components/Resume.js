@@ -106,7 +106,7 @@ const FileIcon = styled(FaFilePdf)`
 const Resume = () => {
   // This is the path to the resume PDF file stored in the public folder.
   // If you change the filename, update it here as well.
-  const resumeUrl = '/Keshav_Shanmukh_Pulikonda_Resume.pdf';
+  const resumeUrl = '/Keshav Shanmukh Resume.pdf';
 
   // Creates a temporary link and triggers the browser download for the resume PDF.
   const handleDownload = () => {
