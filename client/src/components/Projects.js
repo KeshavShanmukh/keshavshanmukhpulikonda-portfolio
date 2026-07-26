@@ -309,7 +309,7 @@ const Projects = () => {
       description: 'An upcoming IoT-based smart gardening system for automated plant care, monitoring soil conditions, and optimizing growth parameters.',
       icon: <FaSeedling />,
       tech: ['Arduino', 'Sensors', 'IoT', 'Mobile App', 'Firebase'],
-      github: 'https://github.com/KeshavShanmukh/smart-gardening-system',
+      //github: 'https://github.com/KeshavShanmukh/smart-gardening-system',
       demo: '#',
       upcoming: true
     }

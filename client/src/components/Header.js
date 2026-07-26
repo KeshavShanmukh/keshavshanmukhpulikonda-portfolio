@@ -262,6 +262,16 @@ const Header = () => {
   const [activeSection, setActiveSection] = useState('home');
   const { isScrolled } = useTheme();
 
+  const sectionLabels = {
+    home: 'Home',
+    about: 'About',
+    skills: 'Skills',
+    projects: 'Projects',
+    certificates: 'Certificates',
+    resume: 'Resume',
+    contact: 'Contact'
+  };
+
   useEffect(() => {
     // This effect watches the page scroll position and updates the active menu item.
     const handleScroll = () => {
@@ -323,7 +333,7 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {sectionLabels[section] || section.charAt(0).toUpperCase() + section.slice(1)}
               </NavLink>
             </motion.li>
           ))}

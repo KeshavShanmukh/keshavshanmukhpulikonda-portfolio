@@ -295,6 +295,39 @@ const CertificateDescription = styled.p`
   margin-bottom: 1.5rem;
 `;
 
+const PreviewSection = styled.div`
+  margin-bottom: 1.25rem;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+`;
+
+const PreviewLabel = styled.div`
+  padding: 0.6rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c7b9ff;
+  background: rgba(102, 126, 234, 0.16);
+`;
+
+const PreviewImage = styled.img`
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+  background: #ffffff;
+`;
+
+const PreviewFrame = styled.iframe`
+  width: 100%;
+  min-height: 240px;
+  border: 0;
+  background: #ffffff;
+`;
+
 const CertificateCategory = styled.span`
   display: inline-block;
   padding: 0.3rem 0.8rem;
@@ -431,6 +464,28 @@ const Certificates = () => {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+  };
+
+  const getPreviewUrl = (certificate) => {
+    if (certificate.verificationLink) return certificate.verificationLink;
+    if (certificate.certificateUrl) return certificate.certificateUrl;
+    if (certificate.certificateFile) return `/uploads/${encodeURIComponent(certificate.certificateFile)}`;
+    return null;
+  };
+
+  const getPreviewType = (certificate) => {
+    const previewUrl = getPreviewUrl(certificate);
+    if (!previewUrl) return null;
+
+    if (/\.(png|jpe?g|gif|webp|svg)$/i.test(previewUrl)) {
+      return 'image';
+    }
+
+    if (/\.(pdf)$/i.test(previewUrl)) {
+      return 'pdf';
+    }
+
+    return 'pdf';
   };
 
   const getTotalCount = () => certificates.length;
@@ -631,6 +686,23 @@ const Certificates = () => {
                 <CertificateDate>{certificate.date}</CertificateDate>
                 
                 <CertificateDescription>{certificate.description}</CertificateDescription>
+
+                {getPreviewUrl(certificate) && (
+                  <PreviewSection>
+                    <PreviewLabel>Preview</PreviewLabel>
+                    {getPreviewType(certificate) === 'image' ? (
+                      <PreviewImage
+                        src={getPreviewUrl(certificate)}
+                        alt={certificate.title}
+                      />
+                    ) : (
+                      <PreviewFrame
+                        src={getPreviewUrl(certificate)}
+                        title={certificate.title}
+                      />
+                    )}
+                  </PreviewSection>
+                )}
                 
                 {certificate.verificationLink ? (
                   <CertificateLink 
