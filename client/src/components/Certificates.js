@@ -642,13 +642,11 @@ const Certificates = () => {
                   >
                     <span>Verify Certificate →</span>
                   </CertificateLink>
-                ) : certificate.certificateFile ? (
-                  // This is the important part for PDF location.
-                  // The app builds a link like /uploads/your-file-name.pdf
-                  // So your PDF should be placed inside the uploads folder.
+                ) : certificate.certificateUrl || certificate.certificateFile ? (
                   <CertificateLink 
-                    href={`/uploads/${certificate.certificateFile}`} 
+                    href={certificate.certificateUrl || `/uploads/${encodeURIComponent(certificate.certificateFile)}`} 
                     target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.05, y: -3 }}
                     whileTap={{ scale: 0.95 }}
                   >

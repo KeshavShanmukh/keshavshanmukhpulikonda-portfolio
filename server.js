@@ -2,20 +2,124 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
+const CERTIFICATE_DIR = process.env.CERTIFICATE_DIR || path.join(process.env.USERPROFILE || 'C:\\Users\\P.KESHAV', 'Downloads', 'complete certificates saparately');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const normalizeText = (value = '') => value.toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+const syncCertificateFiles = () => {
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+
+    if (!fs.existsSync(CERTIFICATE_DIR)) {
+        return;
+    }
+
+    const pdfs = fs.readdirSync(CERTIFICATE_DIR)
+        .filter((file) => file.toLowerCase().endsWith('.pdf'));
+
+    pdfs.forEach((file) => {
+        const sourcePath = path.join(CERTIFICATE_DIR, file);
+        const targetPath = path.join(UPLOADS_DIR, file);
+        if (!fs.existsSync(targetPath)) {
+            fs.copyFileSync(sourcePath, targetPath);
+        }
+    });
+};
+
+syncCertificateFiles();
+
+const resolveCertificateFile = (certificate) => {
+    const requestedFile = certificate.certificateFile || '';
+    if (requestedFile && fs.existsSync(path.join(UPLOADS_DIR, requestedFile))) {
+        return requestedFile;
+    }
+
+    if (!fs.existsSync(CERTIFICATE_DIR)) {
+        return requestedFile;
+    }
+
+    const files = fs.readdirSync(CERTIFICATE_DIR)
+        .filter((file) => file.toLowerCase().endsWith('.pdf'));
+
+    if (files.length === 0) {
+        return requestedFile;
+    }
+
+    const searchTerms = [certificate.title, certificate.organization, certificate.description]
+        .filter(Boolean)
+        .map((value) => normalizeText(value));
+    const search = searchTerms.join(' ');
+
+    const scoredFiles = files
+        .map((file) => {
+            const normalizedFile = normalizeText(file);
+            let score = 0;
+
+            if (normalizedFile.includes(search)) {
+                score += 100;
+            }
+
+            searchTerms.forEach((term) => {
+                if (term && normalizedFile.includes(term)) {
+                    score += 20;
+                }
+            });
+
+            return { file, score };
+        })
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+    if (scoredFiles.length > 0) {
+        return scoredFiles[0].file;
+    }
+
+    return requestedFile;
+};
+
+const buildCertificateUrl = (certificate) => {
+    const resolvedFile = resolveCertificateFile(certificate);
+    if (!resolvedFile) {
+        return null;
+    }
+
+    const fileName = encodeURIComponent(resolvedFile);
+    const localPath = path.join(UPLOADS_DIR, resolvedFile);
+    if (fs.existsSync(localPath)) {
+        return `/uploads/${fileName}`;
+    }
+
+    return `/uploads/${fileName}`;
+};
+
 // Serve static files
 // This tells the app that any PDF file placed inside the uploads folder can be opened in the browser.
 // Example: /uploads/woject-offer-letter.pdf
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(UPLOADS_DIR));
+
+app.get('/uploads/:filename', (req, res, next) => {
+    const requestedFile = decodeURIComponent(req.params.filename);
+    const localPath = path.join(UPLOADS_DIR, requestedFile);
+    const externalPath = path.join(CERTIFICATE_DIR, requestedFile);
+    const candidates = [localPath, externalPath].filter(Boolean);
+    const match = candidates.find((candidate) => fs.existsSync(candidate));
+
+    if (match) {
+        return res.sendFile(match);
+    }
+
+    next();
+});
 
 // Serve React static files in production
 if (process.env.NODE_ENV === 'production') {
@@ -97,7 +201,11 @@ app.get('/api/certificates', async (req, res) => {
             if (err) {
                 res.status(500).json({ message: err.message });
             } else {
-                res.json(rows);
+                const certificates = rows.map((row) => ({
+                    ...row,
+                    certificateUrl: buildCertificateUrl(row)
+                }));
+                res.json(certificates);
             }
         });
     } catch (error) {
@@ -360,20 +468,18 @@ const seedCertificates = () => {
         }
     ];
 
-    // Check if certificates already exist
     db.get('SELECT COUNT(*) as count FROM certificates', [], (err, row) => {
         if (err) {
             console.log('Error checking certificates:', err.message);
             return;
         }
-        
+
         if (row.count === 0) {
-            // Insert certificates
             const insertQuery = `
                 INSERT INTO certificates (title, organization, date, description, category, type, certificateFile, verificationLink, icon, featured)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
-            
+
             certificates.forEach(cert => {
                 db.run(insertQuery, [
                     cert.title, cert.organization, cert.date, cert.description,
@@ -388,7 +494,19 @@ const seedCertificates = () => {
                 });
             });
         } else {
-            console.log('Certificates already exist in database');
+            certificates.forEach(cert => {
+                const resolvedFile = resolveCertificateFile(cert);
+                db.run(
+                    `UPDATE certificates SET certificateFile = ?, verificationLink = ?, icon = ?, featured = ? WHERE title = ? AND organization = ?`,
+                    [resolvedFile, cert.verificationLink, cert.icon, cert.featured ? 1 : 0, cert.title, cert.organization],
+                    (updateErr) => {
+                        if (updateErr) {
+                            console.log('Error updating certificate:', updateErr.message);
+                        }
+                    }
+                );
+            });
+            console.log('Certificates already exist in database; updated file mappings');
         }
     });
 };
