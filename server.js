@@ -13,6 +13,32 @@ const CERTIFICATE_DIR = process.env.CERTIFICATE_DIR || path.join(process.env.USE
 // Disable framework/version disclosure
 app.disable('x-powered-by');
 
+// Rate limiting map for API endpoints (Brute-force and DoS protection)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 300;
+
+const apiRateLimiter = (req, res, next) => {
+    const clientIp = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const now = Date.now();
+    const clientData = rateLimitMap.get(clientIp) || { count: 0, startTime: now };
+
+    if (now - clientData.startTime > RATE_LIMIT_WINDOW_MS) {
+        clientData.count = 1;
+        clientData.startTime = now;
+    } else {
+        clientData.count++;
+    }
+
+    rateLimitMap.set(clientIp, clientData);
+
+    if (clientData.count > MAX_REQUESTS_PER_WINDOW) {
+        return res.status(429).json({ message: 'Too many requests. Please try again later.' });
+    }
+
+    next();
+};
+
 // Security Response Headers Middleware
 app.use((req, res, next) => {
     // Prevent MIME-sniffing
@@ -28,7 +54,14 @@ app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
     // Permissions Policy
-    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=()');
+
+    // Cross-Origin Isolation & Security Policies
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+    res.setHeader('X-DNS-Prefetch-Control', 'off');
+    res.setHeader('X-Download-Options', 'noopen');
+    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
 
     // Content Security Policy (CSP)
     res.setHeader(
@@ -44,7 +77,8 @@ app.use((req, res, next) => {
             "frame-ancestors 'self'",
             "base-uri 'self'",
             "form-action 'self'",
-            "object-src 'none'"
+            "object-src 'none'",
+            "upgrade-insecure-requests"
         ].join('; ')
     );
 
@@ -76,8 +110,11 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// Request body size limits to prevent Denial of Service (DoS) attacks
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true, limit: '100kb' }));
+app.use('/api', apiRateLimiter);
 
 const normalizeText = (value = '') => value.toLowerCase().replace(/[^a-z0-9]+/g, '');
 
@@ -172,9 +209,19 @@ const buildCertificateUrl = (certificate) => {
 app.use('/uploads', express.static(UPLOADS_DIR));
 
 app.get('/uploads/:filename', (req, res, next) => {
-    const requestedFile = decodeURIComponent(req.params.filename);
-    const localPath = path.join(UPLOADS_DIR, requestedFile);
-    const externalPath = path.join(CERTIFICATE_DIR, requestedFile);
+    // Sanitize filename against directory traversal attacks (e.g. ../../)
+    const rawFilename = decodeURIComponent(req.params.filename || '');
+    const safeFilename = path.basename(rawFilename);
+
+    // Whitelist allowed static file extensions
+    const ext = path.extname(safeFilename).toLowerCase();
+    const allowedExtensions = ['.pdf', '.png', '.jpg', '.jpeg', '.webp'];
+    if (!allowedExtensions.includes(ext)) {
+        return res.status(403).json({ message: 'Access denied: invalid file extension.' });
+    }
+
+    const localPath = path.join(UPLOADS_DIR, safeFilename);
+    const externalPath = path.join(CERTIFICATE_DIR, safeFilename);
     const candidates = [localPath, externalPath].filter(Boolean);
     const match = candidates.find((candidate) => fs.existsSync(candidate));
 
@@ -300,22 +347,50 @@ app.post('/api/certificates', async (req, res) => {
     try {
         const { title, organization, date, description, category, type, certificateFile, verificationLink, icon, featured } = req.body;
         
+        const validCategories = ['professional', 'participation', 'workshop', 'online-course', 'community-service', 'hackathon'];
+        const validTypes = ['internship', 'offer-letter', 'completion', 'participation', 'achievement'];
+
+        if (!title || typeof title !== 'string' || !organization || typeof organization !== 'string') {
+            return res.status(400).json({ message: 'Validation error: Title and Organization are required.' });
+        }
+
+        if (!category || !validCategories.includes(category)) {
+            return res.status(400).json({ message: 'Validation error: Invalid category.' });
+        }
+
+        if (!type || !validTypes.includes(type)) {
+            return res.status(400).json({ message: 'Validation error: Invalid type.' });
+        }
+
+        const safeCertificateFile = certificateFile ? path.basename(String(certificateFile)) : null;
+
         const query = `
             INSERT INTO certificates (title, organization, date, description, category, type, certificateFile, verificationLink, icon, featured)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         
-        const params = [title, organization, date, description, category, type, certificateFile, verificationLink, icon, featured ? 1 : 0];
+        const params = [
+            title.trim().slice(0, 255),
+            organization.trim().slice(0, 255),
+            (date || '').toString().trim().slice(0, 100),
+            (description || '').toString().trim().slice(0, 1000),
+            category,
+            type,
+            safeCertificateFile,
+            verificationLink ? verificationLink.toString().trim().slice(0, 500) : null,
+            icon ? icon.toString().trim().slice(0, 10) : '🎓',
+            featured ? 1 : 0
+        ];
         
         db.run(query, params, function(err) {
             if (err) {
-                res.status(400).json({ message: err.message });
+                res.status(400).json({ message: 'Database error occurred' });
             } else {
                 res.status(201).json({ id: this.lastID, ...req.body });
             }
         });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(400).json({ message: 'Invalid request payload' });
     }
 });
 
