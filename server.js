@@ -10,8 +10,72 @@ const PORT = process.env.PORT || 5000;
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 const CERTIFICATE_DIR = process.env.CERTIFICATE_DIR || path.join(process.env.USERPROFILE || 'C:\\Users\\P.KESHAV', 'Downloads', 'complete certificates saparately');
 
-// Middleware
-app.use(cors());
+// Disable framework/version disclosure
+app.disable('x-powered-by');
+
+// Security Response Headers Middleware
+app.use((req, res, next) => {
+    // Prevent MIME-sniffing
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+
+    // Anti-Clickjacking: Restrict framing to same origin
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+
+    // HTTP Strict Transport Security (HSTS)
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+
+    // Referrer Policy
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+    // Permissions Policy
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+    // Content Security Policy (CSP)
+    res.setHeader(
+        'Content-Security-Policy',
+        [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline'",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' data: https://fonts.gstatic.com",
+            "img-src 'self' data: blob: https:",
+            "connect-src 'self'",
+            "frame-src 'self' blob: data:",
+            "frame-ancestors 'self'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "object-src 'none'"
+        ].join('; ')
+    );
+
+    next();
+});
+
+// Explicit CORS origin configuration (Removes wildcard Access-Control-Allow-Origin: *)
+const allowedOrigins = [
+    'https://keshavshanmukhpulikonda-portfolio.onrender.com',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:5000',
+    'http://127.0.0.1:5000'
+];
+
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow same-origin requests, local dev, or whitelisted production origin
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(null, false);
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -120,11 +184,6 @@ app.get('/uploads/:filename', (req, res, next) => {
 
     next();
 });
-
-// Serve React static files in production
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
-}
 
 // SQLite Database Connection
 const dbPath = process.env.NODE_ENV === 'production' 
@@ -511,11 +570,11 @@ const seedCertificates = () => {
     });
 };
 
-// Serve static files from React app in production
-if (process.env.NODE_ENV === 'production') {
+// Serve static files from React app in production or when build directory exists
+if (process.env.NODE_ENV === 'production' || fs.existsSync(path.join(__dirname, 'client/build'))) {
     app.use(express.static(path.join(__dirname, 'client/build')));
     
-    app.get('*', (req, res) => {
+    app.use((req, res) => {
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 }
